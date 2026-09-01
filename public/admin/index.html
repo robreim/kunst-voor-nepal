@@ -115,6 +115,9 @@
         var widgetReady = false;
         var started = false;
         var pendingToken = (location.hash || '').match(/(recovery|invite)_token=([^&]+)/);
+        // Lokaal (localhost/127.0.0.1) is er géén Netlify Identity — Decap
+        // gebruikt dan de lokale backend (decap-server op :8081) zónder login.
+        var isLocal = /localhost|127\.0\.0\.1|0\.0\.0\.0/.test(location.hostname);
 
         function setStatus(msg, isError) {
           status.textContent = msg || '';
@@ -145,34 +148,36 @@
         window.netlifyIdentity.on('init', function () {
           widgetReady = true;
         });
-        window.netlifyIdentity.init();
 
-        // Belangrijk: Decap's eigen bundle start ALTIJD op zodra hij laadt —
-        // ook zonder inloggen. Daardoor zie je de config-fout/loader al vóór login.
-        // We mounten Decap pas nadat iemand is ingelogd; anders staat hij als
-        // 'leeg' klaar. Dus: NIET auto-initialiseren als er niemand is ingelogd.
-        function maybeStart() {
+        // LOKAAL: geen Netlify-login — meteen de CMS-interface (lokale backend).
+        if (isLocal) {
+          startDecap();
+        } else {
+          window.netlifyIdentity.init();
+
+          function maybeStart() {
+            if (window.netlifyIdentity.currentUser()) {
+              startDecap();
+            }
+          }
+          window.netlifyIdentity.on('login', maybeStart);
+          window.netlifyIdentity.on('logout', function () {
+            started = false;
+          });
+
+          // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
           if (window.netlifyIdentity.currentUser()) {
             startDecap();
+          } else if (pendingToken) {
+            // Uitnodigings- of recovery-link: de widget toont zelf het scherm
+            // waar je een wachtwoord kiest / opnieuw instelt.
+            window.netlifyIdentity.on('init', function () {
+              window.netlifyIdentity.handleAuthCallback();
+            });
+            window.netlifyIdentity.on('login', function () {
+              startDecap();
+            });
           }
-        }
-        window.netlifyIdentity.on('login', maybeStart);
-        window.netlifyIdentity.on('logout', function () {
-          started = false;
-        });
-
-        // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
-        if (window.netlifyIdentity.currentUser()) {
-          startDecap();
-        } else if (pendingToken) {
-          // Uitnodigings- of recovery-link: de widget toont zelf het scherm
-          // waar je een wachtwoord kiest / opnieuw instelt.
-          window.netlifyIdentity.on('init', function () {
-            window.netlifyIdentity.handleAuthCallback();
-          });
-          window.netlifyIdentity.on('login', function () {
-            startDecap();
-          });
         }
 
         function onWidgetReady(fn) {
@@ -188,6 +193,8 @@
             setStatus('Vul je e-mailadres en wachtwoord in.', true);
             return;
           }
+          // Lokaal: geen Netlify-login nodig (lokale backend).
+          if (isLocal) return;
           submitBtn.disabled = true;
           setStatus('Inloggen…');
           onWidgetReady(function () {
