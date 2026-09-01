@@ -152,10 +152,7 @@
           if (wrap) wrap.style.display = 'none';
           try {
             if (window.CMS) {
-              // Custom widget: genereert automatisch een uniek kunstwerknr.
-              // (bijv. X548) — onzichtbaar voor de kunstenaar, bij conflict
-              // wordt opnieuw gegeneerd.
-              registerNumberWidget();
+              registerNumberHook();
               window.CMS.init();
             }
             setStatus('');
@@ -164,40 +161,51 @@
           }
         }
 
-        // Registreert een verborgen widget die bij elk nieuw kunstwerk een
-        // unieke code als "X548" genereert (letter + 3 cijfers 105-999).
-        function registerNumberWidget() {
-          var existing = [];
+        // Registers a preSave hook: before an artwork is committed, if it has
+        // no number yet, generate a unique "X548" code (letter + 3 digits) that
+        // doesn't collide with any existing artwork. Runs synchronously at save
+        // time against the real entry list — no race, truly invisible to the
+        // artist (the field is widget: hidden, so Decap renders no row at all).
+        function registerNumberHook() {
+          var letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+          function gen() {
+            var l = letters[Math.floor(Math.random() * letters.length)];
+            var n = 105 + Math.floor(Math.random() * 895);
+            return l + n;
+          }
           try {
-            if (window.CMS && window.CMS.getBackend && window.CMS.getBackend().getCollection) {
-              var col = window.CMS.getBackend().getCollection('artworks');
-              if (col && col.get && col.getEntries) {
-                col.getEntries().then(function (entries) {
-                  existing = entries.map(function (e) { return e.data.number; }).filter(Boolean);
-                });
-              }
-            }
-          } catch (e) { /* widget still works, just may re-roll more */ }
-
-          window.CMS.registerWidget('artcode', function (props) {
-            var value = props.value || '';
-            var letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-            function gen() {
-              var l = letters[Math.floor(Math.random() * letters.length)];
-              var n = 105 + Math.floor(Math.random() * 895);
-              return l + n;
-            }
-            // Genereer alleen bij een nieuw leeg item; herhaal bij conflict.
-            if (!value) {
-              do { value = gen(); } while (existing.indexOf(value) !== -1);
-            }
-            // Verborgen veld; waarde gaat mee in de frontmatter.
-            return React.createElement('input', {
-              type: 'hidden',
-              value: value,
-              onChange: function (e) { props.onChange(e.target.value); }
+            window.CMS.registerEventListener({
+              name: 'preSave',
+              handler: function (_opts) {
+                // _opts: { entry, collection, ... }. Generate only if empty.
+                var entry = _opts && _opts.entry;
+                var data = entry && entry.get ? entry.get('data') : null;
+                if (!data || data.get('number')) return;
+                var taken = {};
+                try {
+                  var backend = window.CMS.getBackend && window.CMS.getBackend();
+                  var col = backend && backend.getCollection && backend.getCollection('artworks');
+                  if (col && col.get && col.getEntries) {
+                    col.getEntries().then(function (entries) {
+                      entries.forEach(function (e) {
+                        var n = e && e.data && e.data.number;
+                        if (n) taken[n] = true;
+                      });
+                      var code = gen();
+                      while (taken[code]) { code = gen(); }
+                      if (data.set) data.set('number', code);
+                    });
+                  } else {
+                    var code2 = gen();
+                    if (data.set) data.set('number', code2);
+                  }
+                } catch (e) {
+                  var code3 = gen();
+                  if (data && data.set) data.set('number', code3);
+                }
+              },
             });
-          });
+          } catch (e) { /* preSave not available; artist must have a number */ }
         }
 
         // LOKAAL: geen Netlify-Identity — start de widget NIET (zijn login-modal
