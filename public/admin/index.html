@@ -129,6 +129,9 @@
         function startDecap() {
           if (started) return;
           started = true;
+          // Verberg de login-kaart zodra de CMS-interface start.
+          var card = document.querySelector('.auth-card');
+          if (card) card.style.display = 'none';
           try {
             if (window.CMS) window.CMS.init();
             setStatus('');
