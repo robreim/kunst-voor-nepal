@@ -391,8 +391,9 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
   background: var(--paper);
   color: var(--ink);
   padding: 0;
-  max-width: 52rem;
+  max-width: 67.6rem;
   width: calc(100vw - 2rem);
+  max-height: 92vh;
   position: relative;
 }
 .art-modal::backdrop { background: rgba(36, 31, 24, 0.6); }
@@ -416,7 +417,7 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 .art-modal__close:hover { color: var(--ember); }
 .art-modal__inner {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1.4fr 1fr;
   gap: 0;
   max-height: 85vh;
   overflow: hidden;
