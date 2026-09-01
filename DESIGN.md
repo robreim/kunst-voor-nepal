@@ -119,7 +119,7 @@ All content lives in the repo as markdown; Decap edits it, commits, Netlify rebu
 
 **Hero:** *"Kunst voor Nepal"* / **Headline:** *"Ze verloren alles. Wij verkopen onze kunst."*
 
-**Story (draft):** *"In [maand] 2025 werd Nepal getroffen door een verwoestende overstroming. Dorpen spoelden weg, gezinnen verloren hun huis, hun oogst, hun dierbaren. Wij zijn een groep kunstenaars die niet aan de kant kan staan. Daarom verkopen we hier ons werk — alle opbrengsten gaan rechtstreeks naar de slachtoffers en hun families. Koop een kunstwerk, of doe een donatie. Elke euro telt."*
+**Story (draft):** *"In [maand] 2026 werd Nepal getroffen door een verwoestende overstroming. Dorpen spoelden weg, gezinnen verloren hun huis, hun oogst, hun dierbaren. Wij zijn een groep kunstenaars die niet aan de kant kan staan. Daarom verkopen we hier ons werk — alle opbrengsten gaan rechtstreeks naar de slachtoffers en hun families. Koop een kunstwerk, of doe een donatie. Elke euro telt."*
 
 **Buttons:** *Verhaal · Galerij · Doneer · Betaal · Verkocht · Open betaallink*
 **Donate steps:** *"1. Scan de code met je bankapp · 2. Betaal via iDeal of Wero · 3. Klaar — dank je wel ✦"*
