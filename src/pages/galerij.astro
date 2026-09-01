@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ArtGrid from '../components/ArtGrid.astro';
+import ArtworkModal from '../components/ArtworkModal.astro';
 import PayModal from '../components/PayModal.astro';
 
 const settings = (await getCollection('settings'))[0].data;
@@ -26,6 +27,29 @@ const settings = (await getCollection('settings'))[0].data;
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇵</text></svg>" />
     <script is:inline>
       document.addEventListener('click', (event) => {
+        // ── Open artwork detail modal on card click (image or body) ──
+        const artEl = event.target.closest('.art-open');
+        if (artEl) {
+          const modal = document.querySelector('.art-modal');
+          if (modal) {
+            modal.querySelector('#art-modal-img').src = artEl.dataset.artImage;
+            modal.querySelector('#art-modal-img').alt = `${artEl.dataset.artTitle} — ${artEl.dataset.artArtist}`;
+            modal.querySelector('#art-modal-title').textContent = artEl.dataset.artTitle;
+            modal.querySelector('#art-modal-number').textContent = `nr. ${artEl.dataset.artNumber}`;
+            modal.querySelector('#art-modal-artist').textContent = artEl.dataset.artArtist;
+            modal.querySelector('#art-modal-dimensions').textContent = artEl.dataset.artDimensions;
+            modal.querySelector('#art-modal-material').textContent = artEl.dataset.artMaterial;
+            modal.querySelector('#art-modal-price').textContent = artEl.dataset.artPrice;
+            modal.querySelector('#art-modal-description').textContent = artEl.dataset.artDescription;
+            const payBtn = modal.querySelector('#art-modal-pay');
+            payBtn.dataset.number = artEl.dataset.artNumber;
+            payBtn.style.display = artEl.dataset.artSold ? 'none' : 'inline-block';
+            modal.showModal();
+          }
+          return;
+        }
+
+        // ── Open payment modal ──
         const openBtn = event.target.closest('.pay-open');
         if (!openBtn) return;
         const number = openBtn.dataset.number;
@@ -39,8 +63,23 @@ const settings = (await getCollection('settings'))[0].data;
         if (piece) piece.textContent = `Kunstwerk nr. ${number}`;
         modal.showModal();
       });
-      document.querySelectorAll('.pay-modal__close').forEach((btn) => {
+      document.querySelectorAll('.pay-modal__close, .art-modal__close').forEach((btn) => {
         btn.addEventListener('click', () => btn.closest('dialog').close());
+      });
+      // Clicking the Betaal button inside the artwork modal opens the pay modal.
+      document.addEventListener('click', (event) => {
+        const payBtn = event.target.closest('#art-modal-pay');
+        if (!payBtn) return;
+        const artModal = document.querySelector('.art-modal');
+        if (artModal && artModal.open) artModal.close();
+        const payModal = document.querySelector('.pay-modal');
+        if (payModal) {
+          const callout = payModal.querySelector('.pay-modal__callout');
+          const piece = payModal.querySelector('.pay-modal__piece');
+          if (callout) callout.textContent = `Vermeld nummer ${payBtn.dataset.number} in de omschrijving bij je betaling. Zo weten we welk kunstwerk het geld betreft.`;
+          if (piece) piece.textContent = `Kunstwerk nr. ${payBtn.dataset.number}`;
+          payModal.showModal();
+        }
       });
     </script>
   </head>
@@ -84,5 +123,6 @@ const settings = (await getCollection('settings'))[0].data;
     </footer>
 
     <PayModal number={1} qr={settings.tikkieQr} payUrl={settings.tikkieUrl} />
+    <ArtworkModal />
   </body>
 </html>

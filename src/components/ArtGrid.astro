@@ -13,14 +13,40 @@ const artworks = (await getCollection('artworks'))
 
 <ul class="grid">
   {
-    artworks.map((a, i) => (
+    artworks.map((a, i) => {
+      const price = a.data.minimumprijs != null
+        ? '€' + a.data.minimumprijs.toFixed(2).replace('.', ',')
+        : '';
+      return (
       <li class:list={[`tilt-${(i % 2) + 1}`, { 'is-sold': a.data.sold }]}>
         <article class="card">
-          <div class="card__media">
+          <div class="card__media art-open" tabindex="0" role="button"
+            aria-label={`Bekijk ${a.data.title}`}
+            data-art-title={a.data.title}
+            data-art-artist={a.data.artist}
+            data-art-number={a.data.number}
+            data-art-image={a.data.image}
+            data-art-dimensions={a.data.breedteCm && a.data.hoogteCm ? `${a.data.breedteCm} × ${a.data.hoogteCm} cm` : ''}
+            data-art-material={a.data.materiaal || ''}
+            data-art-price={price}
+            data-art-description={a.body || ''}
+            data-art-sold={a.data.sold ? 'true' : ''}
+          >
             <img src={a.data.image} alt={`${a.data.title} — ${a.data.artist}`} loading="lazy" />
             {a.data.sold && <span class="card__badge">Verkocht</span>}
           </div>
-          <div class="card__body">
+          <div class="card__body art-open" tabindex="0" role="button"
+            aria-label={`Bekijk ${a.data.title}`}
+            data-art-title={a.data.title}
+            data-art-artist={a.data.artist}
+            data-art-number={a.data.number}
+            data-art-image={a.data.image}
+            data-art-dimensions={a.data.breedteCm && a.data.hoogteCm ? `${a.data.breedteCm} × ${a.data.hoogteCm} cm` : ''}
+            data-art-material={a.data.materiaal || ''}
+            data-art-price={price}
+            data-art-description={a.body || ''}
+            data-art-sold={a.data.sold ? 'true' : ''}
+          >
             <p class="card__number">nr. {a.data.number}</p>
             <h3 class="card__title">{a.data.title}</h3>
             <p class="card__artist">{a.data.artist}</p>
@@ -29,7 +55,7 @@ const artworks = (await getCollection('artworks'))
             )}
             {a.data.materiaal && <p class="card__dimensions">{a.data.materiaal}</p>}
             {a.data.minimumprijs && (
-              <p class="card__price">vanaf €{a.data.minimumprijs.toFixed(2).replace('.', ',')}</p>
+              <p class="card__price">{price}</p>
             )}
             <div class="card__actions">
               {!a.data.sold && (
@@ -39,6 +65,7 @@ const artworks = (await getCollection('artworks'))
           </div>
         </article>
       </li>
-    ))
+      );
+    })
   }
 </ul>

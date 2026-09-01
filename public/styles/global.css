@@ -381,6 +381,115 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
   .pay-modal__link-btn { display: inline-block; }
 }
 
+/* ── Artwork detail modal ─────────────────────────────────────── */
+.art-open { cursor: pointer; }
+.art-open:hover .card__title { color: var(--ember-deep); }
+
+.art-modal {
+  border: 3px solid var(--ink);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0;
+  max-width: 52rem;
+  width: calc(100vw - 2rem);
+  position: relative;
+}
+.art-modal::backdrop { background: rgba(36, 31, 24, 0.6); }
+.art-modal__close-wrap {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.7rem;
+  margin: 0;
+  z-index: 2;
+}
+.art-modal__close {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  font-size: 1.1rem;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0.3rem 0.55rem;
+  line-height: 1;
+}
+.art-modal__close:hover { color: var(--ember); }
+.art-modal__inner {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 0;
+  max-height: 85vh;
+  overflow: hidden;
+}
+.art-modal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-right: 3px solid var(--ink);
+}
+.art-modal__info {
+  padding: 2rem 1.8rem 2.2rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.art-modal__number {
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  color: var(--teal);
+}
+.art-modal__title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.1;
+}
+.art-modal__artist {
+  margin: 0;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+.art-modal__dimensions,
+.art-modal__material {
+  margin: 0.3rem 0 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.art-modal__price {
+  margin: 0.8rem 0 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+.art-modal__description {
+  margin: 0.8rem 0 0;
+  font-size: 1rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.art-modal__pay {
+  margin-top: auto;
+  padding-top: 1.2rem;
+  align-self: flex-start;
+}
+.art-modal__pay { margin-top: 1.5rem; }
+
+@media (max-width: 640px) {
+  .art-modal__inner {
+    grid-template-columns: 1fr;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+  .art-modal__img {
+    border-right: none;
+    border-bottom: 3px solid var(--ink);
+    max-height: 50vh;
+    object-fit: contain;
+  }
+}
+
 /* ── Donate page ─────────────────────────────────────────────── */
 .page-doneer { padding-bottom: 3.5rem; }
 .donate { padding: 0.5rem 0 2.5rem; }
