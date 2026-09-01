@@ -8,6 +8,9 @@ const artworks = defineCollection({
     artist: z.string(),
     number: z.string(),
     image: z.string(),
+    breedteCm: z.number().int().positive().optional(),
+    hoogteCm: z.number().int().positive().optional(),
+    materiaal: z.string().optional(),
     sold: z.boolean().default(false),
   }),
 });

@@ -24,6 +24,10 @@ const artworks = (await getCollection('artworks'))
             <p class="card__number">nr. {a.data.number}</p>
             <h3 class="card__title">{a.data.title}</h3>
             <p class="card__artist">{a.data.artist}</p>
+            {a.data.breedteCm && a.data.hoogteCm && (
+              <p class="card__dimensions">{a.data.breedteCm} × {a.data.hoogteCm} cm</p>
+            )}
+            {a.data.materiaal && <p class="card__dimensions">{a.data.materiaal}</p>}
             <div class="card__actions">
               {!a.data.sold && (
                 <button class="btn btn--ember pay-open" data-number={a.data.number}>Betaal</button>

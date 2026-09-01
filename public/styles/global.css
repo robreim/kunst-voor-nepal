@@ -266,6 +266,14 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
   color: var(--ink-soft);
   font-style: italic;
 }
+.card__dimensions {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.card__dimensions:last-child {
+  margin-bottom: 0.9rem;
+}
 .card__actions { margin-top: auto; }
 .is-sold .card__title { color: var(--sold); text-decoration: line-through; }
 
