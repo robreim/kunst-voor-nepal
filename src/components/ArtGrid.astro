@@ -28,6 +28,9 @@ const artworks = (await getCollection('artworks'))
               <p class="card__dimensions">{a.data.breedteCm} × {a.data.hoogteCm} cm</p>
             )}
             {a.data.materiaal && <p class="card__dimensions">{a.data.materiaal}</p>}
+            {a.data.minimumprijs && (
+              <p class="card__price">vanaf €{a.data.minimumprijs.toFixed(2).replace('.', ',')}</p>
+            )}
             <div class="card__actions">
               {!a.data.sold && (
                 <button class="btn btn--ember pay-open" data-number={a.data.number}>Betaal</button>

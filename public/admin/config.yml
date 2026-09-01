@@ -35,9 +35,10 @@ collections:
         default: ""
         hint: "Wordt automatisch gegenereerd (bijv. X548). Onzichtbaar."
       - { label: "Foto", name: "image", widget: "image" }
-      - { label: "Breedte (cm)", name: "breedteCm", widget: "number", value_type: "int", min: 1, hint: "Breedte van het kunstwerk in centimeters." }
-      - { label: "Hoogte (cm)", name: "hoogteCm", widget: "number", value_type: "int", min: 1, hint: "Hoogte van het kunstwerk in centimeters." }
-      - { label: "Materiaal", name: "materiaal", widget: "string", hint: "Bijv. aquarel op papier, acryl op doek…" }
+      - { label: "Breedte (cm)", name: "breedteCm", widget: "number", value_type: "int", min: 1, required: true, hint: "Breedte van het kunstwerk in centimeters." }
+      - { label: "Hoogte (cm)", name: "hoogteCm", widget: "number", value_type: "int", min: 1, required: true, hint: "Hoogte van het kunstwerk in centimeters." }
+      - { label: "Minimumprijs (euro)", name: "minimumprijs", widget: "number", value_type: "float", min: 0, required: true, hint: "Laagste prijs waarvoor het werk mag worden verkocht." }
+      - { label: "Materiaal", name: "materiaal", widget: "string", required: false, hint: "Bijv. aquarel op papier, acryl op doek…" }
       - { label: "Verkocht?", name: "sold", widget: "boolean", default: false, required: false }
       - { label: "Omschrijving", name: "body", widget: "markdown", required: false }
 

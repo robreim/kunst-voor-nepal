@@ -274,6 +274,11 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 .card__dimensions:last-child {
   margin-bottom: 0.9rem;
 }
+.card__price {
+  margin: 0 0 0.9rem;
+  font-weight: 700;
+  color: var(--teal);
+}
 .card__actions { margin-top: auto; }
 .is-sold .card__title { color: var(--sold); text-decoration: line-through; }
 
