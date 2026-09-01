@@ -173,7 +173,9 @@
           submitBtn.disabled = true;
           setStatus('Inloggen…');
           onWidgetReady(function () {
-            window.netlifyIdentity
+            // De widget zelf heeft géén openbare .login() — de goTrue-client
+            // (zelfde code als het widget-modal) doet het echte werk.
+            window.netlifyIdentity.gotrue
               .login(email, password, true)
               .then(function () {
                 startDecap();
