@@ -28,12 +28,13 @@ npm run build    # output in dist/
 1. Push deze repo naar GitHub.
 2. Op Netlify: *New site from Git* → kies de repo → build `npm run build`, publish `dist/` (al ingevuld via `netlify.toml`).
 3. Decap-auth: Netlify Dashboard → **Identity** inschakelen, dan **Settings → Identity → Services** → **Git Gateway** inschakelen.
-4. Nodig kunstenaars uit onder **Identity → Invite users** (rol: *Editor*).
-5. Klaar: `https://kunstvoornepal.nl/admin` inloggen → kunstwerk toevoegen → Publish → site herbouwt automatisch.
-6. Optioneel: zet de Netlify-subdomein (`kunstvoornepal.netlify.app`) om naar het eigen domein via **Domain settings → Add custom domain** (`kunstvoornepal.nl`, met de DNS-instellingen die Netlify toont).
+4. Voeg kunstenaars toe onder **Identity → Invite users** (rol: *Editor*) — **alleen e-mailadressen die hier staan** krijgen een loginlink.
 
-## Nog invullen voor lancering
+### Inloggen (zonder wachtwoorden)
 
-- Echte Tikkie-QR-afbeelding + echte `tikkieUrl` (zie hierboven).
-- Echte verhaaltekst + contact-e-mailadres (via CMS).
-- Voorbeeldkunstwerken (`src/content/artworks/`) verwijderen zodra er echte kunst is.
+- Ga naar `https://kunstvoornepal.nl/admin` → vul je e-mailadres in → **Ontvang inloglink per e-mail**.
+- Klik de link in de e-mail → je bent ingelogd. **Er is nooit een wachtwoord nodig of gevraagd.**
+- Onbekende e-mailadressen krijgen stil geen mail (Netlify beantwoordt identiek), dus er valt niets te raden.
+- De site herbouwt automatisch na elke publicatie van een kunstwerk.
+
+> **Let op:** alleen bij de allereerste uitnodiging (via *Invite users* in de Netlify-console) vraagt Netlify eenmalig om een wachtwoord te kiezen, omdat de uitnodigingslink dat server-side vereist. Daarna is elk volgend bezoek via de loginlink wachtwoordloos. Wil je ook die eerste stap overslaan, gebruik dan in de console *Resend invitation* of vraag de persoon eerst een recovery-link te gebruiken — beide zijn net zo veilig (het e-mailadres is de sleutel).

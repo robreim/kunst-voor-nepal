@@ -28,6 +28,11 @@ const { Content } = await story.render();
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇵</text></svg>" />
     <script is:inline>
+      // Loginmagie: een e-mail-link met een inlogtoken die op de homepage belandt,
+      // stuurt door naar /admin waar de token wordt afgehandeld.
+      if ((location.hash || '').match(/(recovery|invite)_token=/)) {
+        location.replace('/admin' + location.hash);
+      }
       // One global listener opens the right piece's pay modal when a "Betaal" button is clicked.
       // The piece's number and pay link live in data-* attributes; the shared Tikkie link
       // (data-pay-url) and QR image (data-qr) come from the page itself.

@@ -4,9 +4,152 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Beheer — Kunst voor Nepal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Caveat:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.css" />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1.5rem;
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 26rem;
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        padding: 2.5rem 2rem;
+        text-align: center;
+      }
+      .auth-card h1 {
+        font-family: 'Caveat', cursive;
+        font-size: 2.4rem;
+        font-weight: 700;
+        margin: 0 0 0.25rem;
+        transform: rotate(-2deg);
+      }
+      .auth-card p.lead {
+        color: var(--ink-soft);
+        margin: 0 0 1.5rem;
+      }
+      .auth-card form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .auth-card input[type='email'] {
+        font-family: inherit;
+        font-size: 1rem;
+        padding: 0.7rem 0.9rem;
+        border: 2px solid var(--ink);
+        border-radius: 12px 8px 12px 8px;
+        background: #fff;
+        color: var(--ink);
+        width: 100%;
+      }
+      .auth-card input[type='email']:focus {
+        outline: none;
+        box-shadow: inset 0 0 0 2px var(--ember);
+      }
+      .auth-card .status {
+        min-height: 1.6rem;
+        font-size: 0.95rem;
+        color: var(--teal);
+        font-weight: 600;
+      }
+      .auth-card .status.error { color: var(--ember-deep); }
+      .btn--ember { border: 2px solid var(--ember); }
+      .back-link {
+        display: inline-block;
+        margin-top: 1.5rem;
+        color: var(--ink-soft);
+        text-decoration: underline dotted;
+      }
+    </style>
   </head>
   <body>
+    <div class="auth-card">
+      <h1>Kunst voor Nepal</h1>
+      <p class="lead">Beheer — kunstwerken, verhaal en instellingen</p>
+      <form id="login-form" novalidate>
+        <input type="email" id="email" name="email" placeholder="Je e-mailadres" autocomplete="email" required />
+        <button type="submit" class="btn btn--ember" id="submit-btn">Ontvang inloglink per e-mail</button>
+      </form>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+      <a class="back-link" href="/">← terug naar de site</a>
+    </div>
+
+    <script src="https://unpkg.com/netlify-identity-widget@1.9.2/build/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script>
+      // ── Passwordless login (magic link) voor kunstvoornepal.nl/admin ──
+      // Geen wachtwoorden: bekende e-mailadressen (toegevoegd in de Netlify-console)
+      // krijgen een loginlink. De link gebruikt Netlify's eigen recovery-omwisseling,
+      // die een volledige sessie oplevert zonder dat er ooit een wachtwoord wordt gezet.
+      (function () {
+        var form = document.getElementById('login-form');
+        var emailInput = document.getElementById('email');
+        var submitBtn = document.getElementById('submit-btn');
+        var status = document.getElementById('status');
+
+        function setStatus(msg, isError) {
+          status.textContent = msg || '';
+          status.classList.toggle('error', !!isError);
+        }
+
+        function startDecap() {
+          try {
+            if (window.netlifyIdentity) window.netlifyIdentity.init();
+            if (window.CMS) window.CMS.init();
+            setStatus('');
+          } catch (e) {
+            setStatus('Beheer kon niet starten. Ververs de pagina of neem contact op.', true);
+          }
+        }
+
+        // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
+        if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
+          startDecap();
+        } else {
+          // Magic link (recovery) of uitnodigingslink die op /admin terechtkomt.
+          var m = (location.hash || '').match(/(recovery|invite)_token=([^&]+)/);
+          if (m && window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', function () {
+              // recovery → volledige sessie; invite → nog een wachtwoord kiezen (Netlify-vereiste).
+              window.netlifyIdentity.handleAuthCallback();
+            });
+            window.netlifyIdentity.on('login', function () {
+              startDecap();
+            });
+          }
+        }
+
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          var email = emailInput.value.trim();
+          if (!email) return;
+          submitBtn.disabled = true;
+          setStatus('Even geduld… we sturen de link.');
+          window.netlifyIdentity
+            .requestPasswordRecovery(email)
+            .then(function () {
+              setStatus('Kijk in je inbox: er zit een loginlink in de e-mail.');
+            })
+            .catch(function (err) {
+              setStatus('Er ging iets mis: ' + (err && (err.msg || err.message) ? (err.msg || err.message) : 'probeer het nog eens.'), true);
+            })
+            .finally(function () {
+              submitBtn.disabled = false;
+            });
+        });
+      })();
+    </script>
   </body>
 </html>
