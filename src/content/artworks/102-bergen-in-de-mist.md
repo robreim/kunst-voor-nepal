@@ -1,7 +1,7 @@
 ---
 title: "Bergen in de mist"
 artist: "Samir Thapa"
-number: 102
+number: "C107"
 image: "/art/placeholder-2.svg"
 sold: false
 ---

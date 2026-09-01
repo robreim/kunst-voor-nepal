@@ -1,7 +1,7 @@
 ---
 title: "De blauwe rivier"
 artist: "Anouk van der Berg"
-number: 101
+number: "A105"
 image: "/art/placeholder-1.svg"
 sold: false
 ---

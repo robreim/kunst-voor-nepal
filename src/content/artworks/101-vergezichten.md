@@ -1,7 +1,7 @@
 ---
 title: vergezichten
 artist: Jan Fritz
-number: 101
+number: "B106"
 image: /art/ginyu.png
 sold: true
 ---

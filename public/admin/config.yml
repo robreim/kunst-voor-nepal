@@ -3,7 +3,7 @@
 
 backend:
   name: git-gateway
-  branch: main
+  branch: accept
 
 # Local preview when running `npm run dev` (no Netlify auth needed).
 local_backend: true
@@ -23,18 +23,16 @@ collections:
     delete: true
     extension: md
     format: frontmatter
-    slug: "{{number}}-{{slug}}"
+    slug: "{{slug}}"
     preview_path: "galerij"
     summary: "{{number}} · {{title}} — {{artist}}"
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Kunstenaar", name: "artist", widget: "string" }
-      - label: "Nummer"
+      - label: "Nummer (automatisch)"
         name: "number"
-        widget: "number"
-        value_type: "int"
-        min: 101
-        hint: "Uniek nummer vanaf 101. De koper vermeldt dit nummer in de betaling."
+        widget: "artcode"
+        hint: "Wordt automatisch gegenereerd (bijv. X548). Niet zichtbaar voor de kunstenaar."
       - { label: "Foto", name: "image", widget: "image" }
       - { label: "Verkocht?", name: "sold", widget: "boolean", default: false, required: false }
       - { label: "Omschrijving", name: "body", widget: "markdown", required: false }

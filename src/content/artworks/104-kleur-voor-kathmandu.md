@@ -1,7 +1,7 @@
 ---
 title: "Kleur voor Kathmandu"
 artist: "Ravi Shrestha"
-number: 104
+number: "F110"
 image: "/art/placeholder-4.svg"
 sold: true
 ---

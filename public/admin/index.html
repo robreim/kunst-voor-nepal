@@ -151,11 +151,53 @@
           var wrap = document.querySelector('.auth-wrap');
           if (wrap) wrap.style.display = 'none';
           try {
-            if (window.CMS) window.CMS.init();
+            if (window.CMS) {
+              // Custom widget: genereert automatisch een uniek kunstwerknr.
+              // (bijv. X548) — onzichtbaar voor de kunstenaar, bij conflict
+              // wordt opnieuw gegeneerd.
+              registerNumberWidget();
+              window.CMS.init();
+            }
             setStatus('');
           } catch (e) {
             setStatus('Beheer kon niet starten. Ververs de pagina of neem contact op.', true);
           }
+        }
+
+        // Registreert een verborgen widget die bij elk nieuw kunstwerk een
+        // unieke code als "X548" genereert (letter + 3 cijfers 105-999).
+        function registerNumberWidget() {
+          var existing = [];
+          try {
+            if (window.CMS && window.CMS.getBackend && window.CMS.getBackend().getCollection) {
+              var col = window.CMS.getBackend().getCollection('artworks');
+              if (col && col.get && col.getEntries) {
+                col.getEntries().then(function (entries) {
+                  existing = entries.map(function (e) { return e.data.number; }).filter(Boolean);
+                });
+              }
+            }
+          } catch (e) { /* widget still works, just may re-roll more */ }
+
+          window.CMS.registerWidget('artcode', function (props) {
+            var value = props.value || '';
+            var letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+            function gen() {
+              var l = letters[Math.floor(Math.random() * letters.length)];
+              var n = 105 + Math.floor(Math.random() * 895);
+              return l + n;
+            }
+            // Genereer alleen bij een nieuw leeg item; herhaal bij conflict.
+            if (!value) {
+              do { value = gen(); } while (existing.indexOf(value) !== -1);
+            }
+            // Verborgen veld; waarde gaat mee in de frontmatter.
+            return React.createElement('input', {
+              type: 'hidden',
+              value: value,
+              onChange: function (e) { props.onChange(e.target.value); }
+            });
+          });
         }
 
         // LOKAAL: geen Netlify-Identity — start de widget NIET (zijn login-modal

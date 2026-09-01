@@ -6,7 +6,7 @@ const artworks = defineCollection({
   schema: z.object({
     title: z.string(),
     artist: z.string(),
-    number: z.number().int().min(101),
+    number: z.string(),
     image: z.string(),
     sold: z.boolean().default(false),
   }),

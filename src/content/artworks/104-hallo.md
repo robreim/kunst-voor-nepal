@@ -1,7 +1,7 @@
 ---
 title: hallo
 artist: Jan Fritz
-number: 104
+number: "E109"
 image: /art/cacio-e-pepe.jpg
 sold: false
 ---

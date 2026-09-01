@@ -7,7 +7,7 @@ interface Props {
 }
 const { limit } = Astro.props;
 const artworks = (await getCollection('artworks'))
-  .sort((a, b) => a.data.number - b.data.number)
+  .sort((a, b) => a.data.number.localeCompare(b.data.number))
   .slice(0, limit);
 ---
 
