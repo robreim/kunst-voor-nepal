@@ -45,7 +45,7 @@ collections:
     files:
       - label: "Voorpagina-verhaal"
         name: "story"
-        file: "src/content/story.md"
+        file: "src/content/story/story.md"
         fields:
           - { label: "Titel", name: "title", widget: "string" }
           - { label: "Intro (korte lead)", name: "lead", widget: "text" }
