@@ -1,0 +1,26 @@
+---
+interface Props {
+  /** Where the scan-with-phone QR lives: site-wide settings vs a single artwork. */
+  qr: string;
+  /** Full URL of the Tikkie pay link (mobile button + desktop link). */
+  payUrl: string;
+  /** Optional per-piece number shown in the "vergeet het nummer niet" callout. */
+  number?: number;
+}
+const { qr, payUrl, number } = Astro.props;
+const linkLabel = number ? 'Open betaallink' : 'Open betaallink';
+const numberCallout = number
+  ? `Vermeld nummer ${number} in de omschrijving bij je betaling. Zo weten we welk kunstwerk het geld betreft.`
+  : 'Vermeld de naam van het kunstwerk in de omschrijving bij je betaling.';
+---
+
+<div class="pay-modal__inner" role="dialog" aria-modal="true" aria-label="Betaal met Tikkie">
+  <div class="pay-modal__qr">
+    <img src={qr} alt="QR-code voor de Tikkie betaallink" width="280" height="280" />
+    <p class="pay-modal__scan-label">Scan met je bankapp</p>
+  </div>
+  <div class="pay-modal__meta">
+    <p class="pay-modal__callout">{numberCallout}</p>
+    <a class="pay-modal__link-btn" href={payUrl} target="_blank" rel="noopener">{linkLabel}</a>
+  </div>
+</div>

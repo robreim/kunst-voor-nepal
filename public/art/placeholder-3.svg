@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450">
+  <rect width="600" height="450" fill="#EFE6D8"/>
+  <path d="M0 160 Q150 80 300 150 T600 120 L600 450 L0 450 Z" fill="#8FA8A0" opacity="0.5"/>
+  <path d="M0 220 Q180 130 340 210 T600 190 L600 450 L0 450 Z" fill="#C34E2A" opacity="0.35"/>
+  <circle cx="140" cy="330" r="40" fill="#D9A05B" opacity="0.7"/>
+  <path d="M0 450 L600 450 L600 420 Q430 340 300 400 Q180 440 0 390 Z" fill="#241F18"/>
+  <text x="300" y="70" text-anchor="middle" font-family="Georgia, serif" font-size="22" fill="#241F18">103 · voorbeeld</text>
+</svg>

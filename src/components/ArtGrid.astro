@@ -1,0 +1,37 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  /** Number of pieces to show (default: all). */
+  limit?: number;
+}
+const { limit } = Astro.props;
+const artworks = (await getCollection('artworks'))
+  .sort((a, b) => a.data.number - b.data.number)
+  .slice(0, limit);
+---
+
+<ul class="grid">
+  {
+    artworks.map((a, i) => (
+      <li class:list={[`tilt-${(i % 2) + 1}`, { 'is-sold': a.data.sold }]}>
+        <article class="card">
+          <div class="card__media">
+            <img src={a.data.image} alt={`${a.data.title} — ${a.data.artist}`} loading="lazy" />
+            {a.data.sold && <span class="card__badge">Verkocht</span>}
+          </div>
+          <div class="card__body">
+            <p class="card__number">nr. {a.data.number}</p>
+            <h3 class="card__title">{a.data.title}</h3>
+            <p class="card__artist">{a.data.artist}</p>
+            <div class="card__actions">
+              {!a.data.sold && (
+                <button class="btn btn--ember pay-open" data-number={a.data.number}>Betaal</button>
+              )}
+            </div>
+          </div>
+        </article>
+      </li>
+    ))
+  }
+</ul>

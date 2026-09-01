@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+
+const settings = (await getCollection('settings'))[0].data;
+const qr = '/img/tikkie-qr.svg';
+const payUrl = settings.tikkieUrl;
+const steps = [
+  'Scan de code met je bankapp',
+  'Betaal via iDeal of Wero',
+  'Klaar — dank je wel ✦',
+];
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Doneer — Kunst voor Nepal</title>
+    <meta
+      name="description"
+      content="Doe een donatie voor de slachtoffers van de overstromingen in Nepal. Betaal eenvoudig via Tikkie met iDeal of Wero. Alle opbrengsten gaan rechtstreeks naar de getroffenen."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Caveat:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇵</text></svg>" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Hoofdnavigatie">
+        <a href="/" class="site-nav__brand">{settings.siteTitle}</a>
+        <div class="site-nav__links">
+          <a href="/#verhaal">Verhaal</a>
+          <a href="/galerij">Galerij</a>
+          <a href="/doneer" class="btn btn--sticker">Doneer</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-doneer">
+      <section class="hero">
+        <h1>Doneer</h1>
+        <p class="hero__lead">
+          Liever doneren dan een kunstwerk kopen? Super. Elke euro gaat rechtstreeks naar de
+          slachtoffers van de overstromingen in Nepal.
+        </p>
+      </section>
+
+      <section class="donate" aria-label="Betaal met Tikkie">
+        <div class="donate-card">
+          <h2 class="donate-card__title">Scan en betaal</h2>
+          <div class="donate-card__qr">
+            <img src={qr} alt="QR-code voor de Tikkie donatielink" width="280" height="280" />
+            <p class="donate-card__scan-label">Scan met je bankapp</p>
+          </div>
+          <p class="donate-card__steps">
+            <span>1. {steps[0]}</span>
+            <span>2. {steps[1]}</span>
+            <span>3. {steps[2]}</span>
+          </p>
+          <a class="btn btn--ember" href={payUrl} target="_blank" rel="noopener">Open betaallink</a>
+          <p class="donate-card__note">Geen QR? Gebruik de knop hierboven.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="site-footer__note">{settings.footerNote}</p>
+      <p class="site-footer__contact">
+        Contact: <a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a>
+      </p>
+      <p class="site-footer__love">met liefde voor Nepal ✦</p>
+    </footer>
+  </body>
+</html>

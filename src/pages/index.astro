@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+import ArtGrid from '../components/ArtGrid.astro';
+import PayModal from '../components/PayModal.astro';
+
+const settings = (await getCollection('settings'))[0].data;
+const story = (await getCollection('story'))[0];
+const { title, lead } = story.data;
+const { Content } = await story.render();
+const artworks = await getCollection('artworks');
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kunst voor Nepal — verkoop van kunst voor de slachtoffers van de overstromingen</title>
+    <meta
+      name="description"
+      content="Een groep kunstenaars verkoopt kunst om geld in te zamelen voor de slachtoffers van de overstromingen in Nepal. Alle opbrengsten gaan rechtstreeks naar de getroffenen."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Caveat:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇵</text></svg>" />
+    <script is:inline>
+      // One global listener opens the right piece's pay modal when a "Betaal" button is clicked.
+      // The piece's number and pay link live in data-* attributes; the shared Tikkie link
+      // (data-pay-url) and QR image (data-qr) come from the page itself.
+      document.addEventListener('click', (event) => {
+        const openBtn = event.target.closest('.pay-open');
+        if (!openBtn) return;
+        const number = openBtn.dataset.number;
+        const modal = document.querySelector('.pay-modal');
+        if (!modal) return;
+        const callout = modal.querySelector('.pay-modal__callout');
+        const piece = modal.querySelector('.pay-modal__piece');
+        if (callout) {
+          callout.textContent = `Vermeld nummer ${number} in de omschrijving bij je betaling. Zo weten we welk kunstwerk het geld betreft.`;
+        }
+        if (piece) piece.textContent = `Kunstwerk nr. ${number}`;
+        modal.showModal();
+      });
+      document.querySelectorAll('.pay-modal__close').forEach((btn) => {
+        btn.addEventListener('click', () => btn.closest('dialog').close());
+      });
+    </script>
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <nav class="site-nav" aria-label="Hoofdnavigatie">
+        <a href="/" class="site-nav__brand">{settings.siteTitle}</a>
+        <div class="site-nav__links">
+          <a href="/#verhaal">Verhaal</a>
+          <a href="/galerij">Galerij</a>
+          <a href="/doneer" class="btn btn--sticker">Doneer</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="verhaal">
+        <h1 class="hero__title">
+          <span class="hero__title-line">{title}</span>
+        </h1>
+        <p class="hero__lead">{lead}</p>
+        <div class="hero__cta">
+          <a href="/galerij" class="btn btn--ink">Bekijk de galerij</a>
+          <a href="/doneer" class="btn btn--ember">Doneer direct</a>
+        </div>
+      </section>
+
+      <section class="story" aria-label="Het verhaal">
+        <div class="story__body">
+          <div class="prose"><Content /></div>
+        </div>
+      </section>
+
+      <section class="gallery" aria-label="Galerij">
+        <div class="gallery__head">
+          <h2>Uit de galerij</h2>
+          <a href="/galerij" class="btn btn--sticker">Alle kunstwerken</a>
+        </div>
+        <ArtGrid limit={3} />
+        <div class="gallery__foot">
+          <a href="/doneer" class="btn btn--sticker">Doneer</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="site-footer__note">{settings.footerNote}</p>
+      <p class="site-footer__contact">
+        Contact: <a href={`mailto:${settings.contactEmail}`}>{settings.contactEmail}</a>
+      </p>
+      <p class="site-footer__love">met liefde voor Nepal ✦</p>
+    </footer>
+
+    <PayModal number={1} qr="/img/tikkie-qr.svg" payUrl={settings.tikkieUrl} />
+  </body>
+</html>
