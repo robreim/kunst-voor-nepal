@@ -7,7 +7,6 @@ const settings = (await getCollection('settings'))[0].data;
 const story = (await getCollection('story'))[0];
 const { title, lead } = story.data;
 const { Content } = await story.render();
-const artworks = await getCollection('artworks');
 ---
 
 <!doctype html>
@@ -103,6 +102,6 @@ const artworks = await getCollection('artworks');
       <p class="site-footer__love">met liefde voor Nepal ✦</p>
     </footer>
 
-    <PayModal number={1} qr="/img/tikkie-qr.svg" payUrl={settings.tikkieUrl} />
+    <PayModal number={1} qr={settings.tikkieQr} payUrl={settings.tikkieUrl} />
   </body>
 </html>

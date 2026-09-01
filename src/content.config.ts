@@ -24,6 +24,7 @@ const settings = defineCollection({
   type: 'data',
   schema: z.object({
     siteTitle: z.string().default('Kunst voor Nepal'),
+    tikkieQr: z.string().default('/img/tikkie-qr.svg'),
     tikkieUrl: z.string().url(),
     contactEmail: z.string().email(),
     footerNote: z.string().default('Alle opbrengsten gaan naar de slachtoffers van de overstromingen in Nepal en hun families.'),

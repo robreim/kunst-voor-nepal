@@ -2,7 +2,7 @@
 import { getCollection } from 'astro:content';
 
 const settings = (await getCollection('settings'))[0].data;
-const qr = '/img/tikkie-qr.svg';
+const qr = settings.tikkieQr;
 const payUrl = settings.tikkieUrl;
 const steps = [
   'Scan de code met je bankapp',

@@ -54,12 +54,15 @@ collections:
   # ── Instellingen: global settings (Tikkie QR etc.) ─────────────────
   - name: "instellingen"
     label: "Instellingen"
+    media_folder: "public/img"
+    public_folder: "/img"
     files:
       - label: "Algemene instellingen"
         name: "global"
         file: "src/content/settings/global.json"
         fields:
           - { label: "Sitenaam", name: "siteTitle", widget: "string" }
+          - { label: "Tikkie-QR-code (afbeelding)", name: "tikkieQr", widget: "image", hint: "De QR-afbeelding uit de Tikkie-app. Toont op de doneerpagina en in het Betaal-venster." }
           - { label: "Tikkie betaallink (URL)", name: "tikkieUrl", widget: "string", hint: "De link die getoond wordt bij 'Open betaallink'." }
           - { label: "Contact-e-mailadres", name: "contactEmail", widget: "string" }
           - { label: "Voettekst", name: "footerNote", widget: "text" }
