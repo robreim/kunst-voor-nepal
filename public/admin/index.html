@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Caveat:wght@400..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.css" />
+    <link rel="stylesheet" href="https://unpkg.com/decap-cms@3.0.0/dist/decap-cms.css" />
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       body {
@@ -94,7 +94,7 @@
     </div>
 
     <script src="https://unpkg.com/netlify-identity-widget@1.9.2/build/netlify-identity-widget.js"></script>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@3.0.0/dist/decap-cms.js"></script>
     <script>
       // ── Inloggen met e-mail + wachtwoord voor kunstvoornepal.nl/admin ──
       // Een uitnodigingslink (#invite_token=...) laat de widget zelf om een
@@ -119,11 +119,12 @@
           return (err && (err.msg || err.message)) ? (err.msg || err.message) : 'probeer het nog eens.';
         }
 
+        // Belt CMS één keer; roept de widget NIET opnieuw op (dubbele init
+        // van de widget scheurt de Decap-DOM af → removeChild-crash).
         function startDecap() {
           if (started) return;
           started = true;
           try {
-            if (window.netlifyIdentity) window.netlifyIdentity.init();
             if (window.CMS) window.CMS.init();
             setStatus('');
           } catch (e) {
@@ -131,10 +132,11 @@
           }
         }
 
-        window.netlifyIdentity.init();
+        // Widget precies één keer initialiseren.
         window.netlifyIdentity.on('init', function () {
           widgetReady = true;
         });
+        window.netlifyIdentity.init();
 
         // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
         if (window.netlifyIdentity.currentUser()) {
