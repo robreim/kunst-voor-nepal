@@ -14,12 +14,15 @@
     <link rel="stylesheet" href="https://unpkg.com/decap-cms@3.0.0/dist/decap-cms.css" />
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
-      body {
+      /* Centrering alleen voor de inlog-kaart; moet weg zodra de CMS
+         interface (Decap) mount — anders breekt de hele layout. */
+      .auth-wrap {
         min-height: 100vh;
         display: grid;
         place-items: center;
         padding: 2rem 1.5rem;
       }
+      body { margin: 0; background: var(--paper); color: var(--ink); }
       .auth-card {
         width: 100%;
         max-width: 26rem;
@@ -86,6 +89,7 @@
     </style>
   </head>
   <body>
+    <div class="auth-wrap">
     <div class="auth-card">
       <h1>Kunst voor Nepal</h1>
       <p class="lead">Beheer — kunstwerken, verhaal en instellingen</p>
@@ -98,7 +102,7 @@
       <p class="status" id="status" role="status" aria-live="polite"></p>
       <a class="back-link" href="/">← terug naar de site</a>
     </div>
-
+    </div>
     <script>
       // Laad de Netlify Identity widget alleen in productie (niet lokaal):
       // de widget boot zichzelf op bij het laden en opent lokaal een login-modal
@@ -142,9 +146,10 @@
         function startDecap() {
           if (started) return;
           started = true;
-          // Verberg de login-kaart zodra de CMS-interface start.
-          var card = document.querySelector('.auth-card');
-          if (card) card.style.display = 'none';
+          // Verberg de hele inlog-wrap (kaart + centrering) zodra de
+          // CMS-interface start — anders breekt de Decap-layout.
+          var wrap = document.querySelector('.auth-wrap');
+          if (wrap) wrap.style.display = 'none';
           try {
             if (window.CMS) window.CMS.init();
             setStatus('');
