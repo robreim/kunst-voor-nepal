@@ -147,6 +147,20 @@
         });
         window.netlifyIdentity.init();
 
+        // Belangrijk: Decap's eigen bundle start ALTIJD op zodra hij laadt —
+        // ook zonder inloggen. Daardoor zie je de config-fout/loader al vóór login.
+        // We mounten Decap pas nadat iemand is ingelogd; anders staat hij als
+        // 'leeg' klaar. Dus: NIET auto-initialiseren als er niemand is ingelogd.
+        function maybeStart() {
+          if (window.netlifyIdentity.currentUser()) {
+            startDecap();
+          }
+        }
+        window.netlifyIdentity.on('login', maybeStart);
+        window.netlifyIdentity.on('logout', function () {
+          started = false;
+        });
+
         // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
         if (window.netlifyIdentity.currentUser()) {
           startDecap();
