@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="CMS_CONFIG_URL" content="config.local.yml" />
     <title>Beheer — Kunst voor Nepal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,12 +14,15 @@
     <link rel="stylesheet" href="https://unpkg.com/decap-cms@3.0.0/dist/decap-cms.css" />
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
-      body {
+      /* Centrering alleen voor de inlog-kaart; moet weg zodra de CMS
+         interface (Decap) mount — anders breekt de hele layout. */
+      .auth-wrap {
         min-height: 100vh;
         display: grid;
         place-items: center;
         padding: 2rem 1.5rem;
       }
+      body { margin: 0; background: var(--paper); color: var(--ink); }
       .auth-card {
         width: 100%;
         max-width: 26rem;
@@ -85,6 +89,7 @@
     </style>
   </head>
   <body>
+    <div class="auth-wrap">
     <div class="auth-card">
       <h1>Kunst voor Nepal</h1>
       <p class="lead">Beheer — kunstwerken, verhaal en instellingen</p>
@@ -97,8 +102,17 @@
       <p class="status" id="status" role="status" aria-live="polite"></p>
       <a class="back-link" href="/">← terug naar de site</a>
     </div>
-
-    <script src="https://unpkg.com/netlify-identity-widget@1.9.2/build/netlify-identity-widget.js"></script>
+    </div>
+    <script>
+      // Laad de Netlify Identity widget alleen in productie (niet lokaal):
+      // de widget boot zichzelf op bij het laden en opent lokaal een login-modal
+      // bovenop de CMS-interface, terwijl lokaal de lokale backend geldt.
+      if (!/localhost|127\.0\.0\.1|0\.0\.0\.0/.test(location.hostname)) {
+        var s = document.createElement('script');
+        s.src = 'https://unpkg.com/netlify-identity-widget@1.9.2/build/netlify-identity-widget.js';
+        document.head.appendChild(s);
+      }
+    </script>
     <script src="https://unpkg.com/decap-cms@3.0.0/dist/decap-cms.js"></script>
     <script>
       // ── Inloggen met e-mail + wachtwoord voor kunstvoornepal.nl/admin ──
@@ -114,6 +128,9 @@
         var widgetReady = false;
         var started = false;
         var pendingToken = (location.hash || '').match(/(recovery|invite)_token=([^&]+)/);
+        // Lokaal (localhost/127.0.0.1) is er géén Netlify Identity — Decap
+        // gebruikt dan de lokale backend (decap-server op :8081) zónder login.
+        var isLocal = /localhost|127\.0\.0\.1|0\.0\.0\.0/.test(location.hostname);
 
         function setStatus(msg, isError) {
           status.textContent = msg || '';
@@ -129,6 +146,10 @@
         function startDecap() {
           if (started) return;
           started = true;
+          // Verberg de hele inlog-wrap (kaart + centrering) zodra de
+          // CMS-interface start — anders breekt de Decap-layout.
+          var wrap = document.querySelector('.auth-wrap');
+          if (wrap) wrap.style.display = 'none';
           try {
             if (window.CMS) window.CMS.init();
             setStatus('');
@@ -137,24 +158,45 @@
           }
         }
 
-        // Widget precies één keer initialiseren.
-        window.netlifyIdentity.on('init', function () {
-          widgetReady = true;
-        });
-        window.netlifyIdentity.init();
-
-        // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
-        if (window.netlifyIdentity.currentUser()) {
-          startDecap();
-        } else if (pendingToken) {
-          // Uitnodigings- of recovery-link: de widget toont zelf het scherm
-          // waar je een wachtwoord kiest / opnieuw instelt.
+        // LOKAAL: geen Netlify-Identity — start de widget NIET (zijn login-modal
+        // zou bovenop de CMS-interface verschijnen) en mount de CMS direct met
+        // de lokale backend (decap-server :8081). Wacht tot Decap geladen is.
+        if (isLocal) {
+          var tries = 0;
+          (function waitCMS() {
+            if (window.CMS) { startDecap(); return; }
+            if (++tries < 100) setTimeout(waitCMS, 200);
+          })();
+        } else {
+          // Widget precies één keer initialiseren (alleen in productie).
           window.netlifyIdentity.on('init', function () {
-            window.netlifyIdentity.handleAuthCallback();
+            widgetReady = true;
           });
-          window.netlifyIdentity.on('login', function () {
+          window.netlifyIdentity.init();
+
+          function maybeStart() {
+            if (window.netlifyIdentity.currentUser()) {
+              startDecap();
+            }
+          }
+          window.netlifyIdentity.on('login', maybeStart);
+          window.netlifyIdentity.on('logout', function () {
+            started = false;
+          });
+
+          // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
+          if (window.netlifyIdentity.currentUser()) {
             startDecap();
-          });
+          } else if (pendingToken) {
+            // Uitnodigings- of recovery-link: de widget toont zelf het scherm
+            // waar je een wachtwoord kiest / opnieuw instelt.
+            window.netlifyIdentity.on('init', function () {
+              window.netlifyIdentity.handleAuthCallback();
+            });
+            window.netlifyIdentity.on('login', function () {
+              startDecap();
+            });
+          }
         }
 
         function onWidgetReady(fn) {
@@ -170,6 +212,8 @@
             setStatus('Vul je e-mailadres en wachtwoord in.', true);
             return;
           }
+          // Lokaal: geen Netlify-login nodig (lokale backend).
+          if (isLocal) return;
           submitBtn.disabled = true;
           setStatus('Inloggen…');
           onWidgetReady(function () {

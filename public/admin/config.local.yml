@@ -2,12 +2,11 @@
 # See https://decapcms.org/docs/ for reference.
 
 backend:
-  name: git-gateway
+  name: test-repo
   branch: main
+  login: false
 
 # Local preview when running `npm run dev` (no Netlify auth needed).
-local_backend: true
-
 media_folder: "public/art"
 public_folder: "/art"
 site_url: https://kunstvoornepal.nl
