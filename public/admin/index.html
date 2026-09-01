@@ -98,6 +98,8 @@
         var emailInput = document.getElementById('email');
         var submitBtn = document.getElementById('submit-btn');
         var status = document.getElementById('status');
+        var widgetReady = false;
+        var pendingToken = (location.hash || '').match(/(recovery|invite)_token=([^&]+)/);
 
         function setStatus(msg, isError) {
           status.textContent = msg || '';
@@ -119,10 +121,9 @@
           startDecap();
         } else {
           // Magic link (recovery) of uitnodigingslink die op /admin terechtkomt.
-          var m = (location.hash || '').match(/(recovery|invite)_token=([^&]+)/);
-          if (m && window.netlifyIdentity) {
+          // recovery → volledige sessie; invite → nog een wachtwoord kiezen (Netlify-vereiste).
+          if (pendingToken) {
             window.netlifyIdentity.on('init', function () {
-              // recovery → volledige sessie; invite → nog een wachtwoord kiezen (Netlify-vereiste).
               window.netlifyIdentity.handleAuthCallback();
             });
             window.netlifyIdentity.on('login', function () {
@@ -131,23 +132,34 @@
           }
         }
 
+        // Pas actief worden als de widget klaar is, anders faalt de API-call stilletjes.
+        function onWidgetReady(fn) {
+          if (widgetReady) return fn();
+          window.netlifyIdentity.on('init', fn);
+        }
+        window.netlifyIdentity.on('init', function () {
+          widgetReady = true;
+        });
+
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           var email = emailInput.value.trim();
           if (!email) return;
           submitBtn.disabled = true;
           setStatus('Even geduld… we sturen de link.');
-          window.netlifyIdentity
-            .requestPasswordRecovery(email)
-            .then(function () {
-              setStatus('Kijk in je inbox: er zit een loginlink in de e-mail.');
-            })
-            .catch(function (err) {
-              setStatus('Er ging iets mis: ' + (err && (err.msg || err.message) ? (err.msg || err.message) : 'probeer het nog eens.'), true);
-            })
-            .finally(function () {
-              submitBtn.disabled = false;
-            });
+          onWidgetReady(function () {
+            window.netlifyIdentity
+              .requestPasswordRecovery(email)
+              .then(function () {
+                setStatus('Kijk in je inbox: er zit een loginlink in de e-mail.');
+              })
+              .catch(function (err) {
+                setStatus('Er ging iets mis: ' + (err && (err.msg || err.message) ? (err.msg || err.message) : 'probeer het nog eens.'), true);
+              })
+              .finally(function () {
+                submitBtn.disabled = false;
+              });
+          });
         });
       })();
     </script>
