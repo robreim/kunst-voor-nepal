@@ -44,7 +44,7 @@
         flex-direction: column;
         gap: 0.8rem;
       }
-      .auth-card input[type='email'] {
+      .auth-card input {
         font-family: inherit;
         font-size: 1rem;
         padding: 0.7rem 0.9rem;
@@ -54,7 +54,7 @@
         color: var(--ink);
         width: 100%;
       }
-      .auth-card input[type='email']:focus {
+      .auth-card input:focus {
         outline: none;
         box-shadow: inset 0 0 0 2px var(--ember);
       }
@@ -66,6 +66,11 @@
       }
       .auth-card .status.error { color: var(--ember-deep); }
       .btn--ember { border: 2px solid var(--ember); }
+      .hint {
+        font-size: 0.85rem;
+        color: var(--ink-soft);
+        margin: 0.4rem 0 0;
+      }
       .back-link {
         display: inline-block;
         margin-top: 1.5rem;
@@ -80,8 +85,10 @@
       <p class="lead">Beheer — kunstwerken, verhaal en instellingen</p>
       <form id="login-form" novalidate>
         <input type="email" id="email" name="email" placeholder="Je e-mailadres" autocomplete="email" required />
-        <button type="submit" class="btn btn--ember" id="submit-btn">Ontvang inloglink per e-mail</button>
+        <input type="password" id="password" name="password" placeholder="Je wachtwoord" autocomplete="current-password" required />
+        <button type="submit" class="btn btn--ember" id="submit-btn">Inloggen</button>
       </form>
+      <p class="hint">Geen wachtwoord (nog)? Open dan de uitnodigingslink uit je e-mail — daar kies je er een.</p>
       <p class="status" id="status" role="status" aria-live="polite"></p>
       <a class="back-link" href="/">← terug naar de site</a>
     </div>
@@ -89,16 +96,18 @@
     <script src="https://unpkg.com/netlify-identity-widget@1.9.2/build/netlify-identity-widget.js"></script>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
-      // ── Passwordless login (magic link) voor kunstvoornepal.nl/admin ──
-      // Geen wachtwoorden: bekende e-mailadressen (toegevoegd in de Netlify-console)
-      // krijgen een loginlink. De link gebruikt Netlify's eigen recovery-omwisseling,
-      // die een volledige sessie oplevert zonder dat er ooit een wachtwoord wordt gezet.
+      // ── Inloggen met e-mail + wachtwoord voor kunstvoornepal.nl/admin ──
+      // Een uitnodigingslink (#invite_token=...) laat de widget zelf om een
+      // wachtwoord vragen ("Complete your signup") — Netlify vereist dat bij
+      // het accepteren van een uitnodiging. Daarna log je gewoon in.
       (function () {
         var form = document.getElementById('login-form');
         var emailInput = document.getElementById('email');
+        var passwordInput = document.getElementById('password');
         var submitBtn = document.getElementById('submit-btn');
         var status = document.getElementById('status');
         var widgetReady = false;
+        var started = false;
         var pendingToken = (location.hash || '').match(/(recovery|invite)_token=([^&]+)/);
 
         function setStatus(msg, isError) {
@@ -106,7 +115,13 @@
           status.classList.toggle('error', !!isError);
         }
 
+        function errMsg(err) {
+          return (err && (err.msg || err.message)) ? (err.msg || err.message) : 'probeer het nog eens.';
+        }
+
         function startDecap() {
+          if (started) return;
+          started = true;
           try {
             if (window.netlifyIdentity) window.netlifyIdentity.init();
             if (window.CMS) window.CMS.init();
@@ -116,47 +131,48 @@
           }
         }
 
-        // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
-        if (window.netlifyIdentity && window.netlifyIdentity.currentUser()) {
-          startDecap();
-        } else {
-          // Magic link (recovery) of uitnodigingslink die op /admin terechtkomt.
-          // recovery → volledige sessie; invite → nog een wachtwoord kiezen (Netlify-vereiste).
-          if (pendingToken) {
-            window.netlifyIdentity.on('init', function () {
-              window.netlifyIdentity.handleAuthCallback();
-            });
-            window.netlifyIdentity.on('login', function () {
-              startDecap();
-            });
-          }
-        }
-
-        // Pas actief worden als de widget klaar is, anders faalt de API-call stilletjes.
-        function onWidgetReady(fn) {
-          if (widgetReady) return fn();
-          window.netlifyIdentity.on('init', fn);
-        }
+        window.netlifyIdentity.init();
         window.netlifyIdentity.on('init', function () {
           widgetReady = true;
         });
 
+        // Al ingelogd via een eerdere sessie → direct de CMS-interface tonen.
+        if (window.netlifyIdentity.currentUser()) {
+          startDecap();
+        } else if (pendingToken) {
+          // Uitnodigings- of recovery-link: de widget toont zelf het scherm
+          // waar je een wachtwoord kiest / opnieuw instelt.
+          window.netlifyIdentity.on('init', function () {
+            window.netlifyIdentity.handleAuthCallback();
+          });
+          window.netlifyIdentity.on('login', function () {
+            startDecap();
+          });
+        }
+
+        function onWidgetReady(fn) {
+          if (widgetReady) return fn();
+          window.netlifyIdentity.on('init', fn);
+        }
+
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           var email = emailInput.value.trim();
-          if (!email) return;
+          var password = passwordInput.value;
+          if (!email || !password) {
+            setStatus('Vul je e-mailadres en wachtwoord in.', true);
+            return;
+          }
           submitBtn.disabled = true;
-          setStatus('Even geduld… we sturen de link.');
+          setStatus('Inloggen…');
           onWidgetReady(function () {
             window.netlifyIdentity
-              .requestPasswordRecovery(email)
+              .login(email, password, true)
               .then(function () {
-                setStatus('Kijk in je inbox: er zit een loginlink in de e-mail.');
+                startDecap();
               })
               .catch(function (err) {
-                setStatus('Er ging iets mis: ' + (err && (err.msg || err.message) ? (err.msg || err.message) : 'probeer het nog eens.'), true);
-              })
-              .finally(function () {
+                setStatus('Inloggen mislukt: ' + errMsg(err), true);
                 submitBtn.disabled = false;
               });
           });
