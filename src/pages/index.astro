@@ -28,7 +28,36 @@ const { Content } = await story.render();
     />
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇵</text></svg>" />
+    <!-- Sold-state overlay: loads the accept site's freshly-built sold-state.js.
+         Script tags bypass CORS, so production picks up 'sold' flips with 0 credits.
+         Falls back gracefully if the accept site is unreachable. -->
+    <script src="https://accept--magical-haupia-491c3b.netlify.app/sold-state.js" onerror="window.SOLD_STATE=null"></script>
     <script is:inline>
+      // Apply sold-state overlay: hide Betaal + badge sold pieces whose code is
+      // in SOLD_STATE (from the accept site). Runs when that script has loaded.
+      function applySoldState() {
+        if (!window.SOLD_STATE) return;
+        document.querySelectorAll('[data-art-number]').forEach((card) => {
+          if (window.SOLD_STATE[card.dataset.artNumber]) {
+            const li = card.closest('li');
+            if (li) li.classList.add('is-sold');
+            const pay = card.querySelector('.pay-open');
+            if (pay) pay.remove();
+            if (!card.querySelector('.card__badge')) {
+              const media = card.querySelector('.card__media');
+              if (media) {
+                const b = document.createElement('span');
+                b.className = 'card__badge';
+                b.textContent = 'Verkocht';
+                media.appendChild(b);
+              }
+            }
+          }
+        });
+      }
+      if (window.SOLD_STATE) applySoldState();
+      else window.addEventListener('load', () => setTimeout(applySoldState, 500));
+
       // Loginmagie: een e-mail-link met een inlogtoken die op de homepage belandt,
       // stuurt door naar /admin waar de token wordt afgehandeld.
       if ((location.hash || '').match(/(recovery|invite)_token=/)) {
