@@ -13,6 +13,9 @@ public_folder: "/art"
 site_url: https://kunstvoornepal.nl
 logo_url: /img/tikkie-qr.svg
 
+# Dutch admin UI (Decap ships a built-in nl locale).
+locale: nl
+
 collections:
   # ── Kunstwerken: one file per artwork ──────────────────────────────
   - name: "artworks"

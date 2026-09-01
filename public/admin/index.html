@@ -153,6 +153,14 @@
           try {
             if (window.CMS) {
               registerNumberHook();
+              // Kunstenaars denken niet in "publiceren" — de knop heet gewoon "Opslaan".
+              window.CMS.registerLocale('nl', {
+                editor: {
+                  editorToolbar: {
+                    publish: 'Opslaan',
+                  },
+                },
+              });
               window.CMS.init();
             }
             setStatus('');
