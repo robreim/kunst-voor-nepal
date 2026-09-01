@@ -254,8 +254,10 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 .card__number {
   margin: 0;
   font-family: 'Caveat', cursive;
-  font-size: 1.05rem;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--teal);
+  letter-spacing: 0.03em;
 }
 .card__title {
   margin: 0;
@@ -439,8 +441,10 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 .art-modal__number {
   margin: 0;
   font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--teal);
+  letter-spacing: 0.03em;
 }
 .art-modal__title {
   margin: 0;
