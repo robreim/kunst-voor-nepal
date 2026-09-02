@@ -1,12 +1,12 @@
 ---
-title: Red on Black
+title: Blocs 3
 artist: Jan Fritz
 number: B106
-image: /art/red-black1.jpg
-breedteCm: 90
-hoogteCm: 70
-minimumprijs: 80
-materiaal: acryl, vernis
-sold: true
+image: /art/_ned2409.jpg
+breedteCm: 80
+hoogteCm: 60
+minimumprijs: 70
+materiaal: acryl
+sold: false
 ---
 Dit is een topper!
