@@ -1,11 +1,12 @@
 ---
-title: vergezichten
+title: Red on Black
 artist: Jan Fritz
-number: "B106"
-image: /art/ginyu.png
-breedteCm: 30
-hoogteCm: 40
-minimumprijs: 60
+number: B106
+image: /art/red-black1.jpg
+breedteCm: 90
+hoogteCm: 70
+minimumprijs: 80
+materiaal: acryl, vernis
 sold: true
 ---
-kijk eens wat een mooie kikker
+Dit is een topper!
