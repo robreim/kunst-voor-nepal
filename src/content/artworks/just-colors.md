@@ -9,4 +9,4 @@ minimumprijs: 200
 materiaal: acryl
 sold: false
 ---
-Drie doeken in een zwarte baklijst
+Drie doeken van 30x40 in een zwarte baklijst
