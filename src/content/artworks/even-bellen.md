@@ -6,7 +6,7 @@ image: /art/falling-yellow.jpg
 breedteCm: 35
 hoogteCm: 45
 minimumprijs: 60
+orientatie: staand
 materiaal: olie
-sold: false
 ---
 heel bijzonder

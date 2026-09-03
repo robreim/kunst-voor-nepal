@@ -5,6 +5,7 @@ interface Props {
   /** Number of pieces to show (default: all). */
   limit?: number;
 }
+
 const { limit } = Astro.props;
 const artworks = (await getCollection('artworks'))
   .sort((a, b) => a.data.number.localeCompare(b.data.number))
@@ -17,10 +18,18 @@ const artworks = (await getCollection('artworks'))
       const price = a.data.minimumprijs != null
         ? '€' + a.data.minimumprijs.toFixed(2).replace('.', ',')
         : '';
+      // Aspect ratio for the card's image box, based on the artwork's orientation.
+      const ratio = a.data.orientatie === 'staand'
+        ? '3 / 4'
+        : a.data.orientatie === 'vierkant'
+          ? '1 / 1'
+          : '4 / 3';
+      const orientClass = `orient-${a.data.orientatie || 'liggend'}`;
       return (
-      <li class:list={[`tilt-${(i % 2) + 1}`, { 'is-sold': a.data.sold }]}>
+      <li class:list={[`tilt-${(i % 2) + 1}`, orientClass]}>
         <article class="card">
           <div class="card__media art-open" tabindex="0" role="button"
+            style={`aspect-ratio: ${ratio};`}
             aria-label={`Bekijk ${a.data.title}`}
             data-art-title={a.data.title}
             data-art-artist={a.data.artist}
@@ -28,12 +37,10 @@ const artworks = (await getCollection('artworks'))
             data-art-image={a.data.image}
             data-art-dimensions={a.data.breedteCm && a.data.hoogteCm ? `${a.data.breedteCm} × ${a.data.hoogteCm} cm` : ''}
             data-art-material={a.data.materiaal || ''}
-            data-art-price={price}
+            data-art-price={a.data.minimumprijs != null ? `vanaf ${price}` : ''}
             data-art-description={a.body || ''}
-            data-art-sold={a.data.sold ? 'true' : ''}
           >
             <img src={a.data.image} alt={`${a.data.title} — ${a.data.artist}`} loading="lazy" />
-            {a.data.sold && <span class="card__badge">Verkocht</span>}
           </div>
           <div class="card__body art-open" tabindex="0" role="button"
             aria-label={`Bekijk ${a.data.title}`}
@@ -43,9 +50,8 @@ const artworks = (await getCollection('artworks'))
             data-art-image={a.data.image}
             data-art-dimensions={a.data.breedteCm && a.data.hoogteCm ? `${a.data.breedteCm} × ${a.data.hoogteCm} cm` : ''}
             data-art-material={a.data.materiaal || ''}
-            data-art-price={price}
+            data-art-price={a.data.minimumprijs != null ? `vanaf ${price}` : ''}
             data-art-description={a.body || ''}
-            data-art-sold={a.data.sold ? 'true' : ''}
           >
             <p class="card__number">nr. {a.data.number}</p>
             <h3 class="card__title">{a.data.title}</h3>
@@ -55,13 +61,8 @@ const artworks = (await getCollection('artworks'))
             )}
             {a.data.materiaal && <p class="card__dimensions">{a.data.materiaal}</p>}
             {a.data.minimumprijs && (
-              <p class="card__price">{price}</p>
+              <p class="card__price">vanaf {price}</p>
             )}
-            <div class="card__actions">
-              {!a.data.sold && (
-                <button class="btn btn--ember pay-open" data-number={a.data.number}>Betaal</button>
-              )}
-            </div>
           </div>
         </article>
       </li>

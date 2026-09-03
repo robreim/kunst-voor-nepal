@@ -10,7 +10,6 @@ backend:
 media_folder: "public/art"
 public_folder: "/art"
 site_url: https://kunstvoornepal.nl
-logo_url: /img/tikkie-qr.svg
 
 collections:
   # ── Kunstwerken: one file per artwork ──────────────────────────────
@@ -28,14 +27,23 @@ collections:
     fields:
       - { label: "Titel", name: "title", widget: "string" }
       - { label: "Kunstenaar", name: "artist", widget: "string" }
-      - label: "Nummer"
+      - label: "Nummer (automatisch)"
         name: "number"
-        widget: "number"
-        value_type: "int"
-        min: 101
-        hint: "Uniek nummer vanaf 101. De koper vermeldt dit nummer in de betaling."
+        widget: "hidden"
+        default: ""
+        hint: "Wordt automatisch gegenereerd bij elke build. Onzichtbaar."
       - { label: "Foto", name: "image", widget: "image" }
-      - { label: "Verkocht?", name: "sold", widget: "boolean", default: false, required: false }
+      - { label: "Breedte (cm)", name: "breedteCm", widget: "number", value_type: "int", min: 1, required: true }
+      - { label: "Hoogte (cm)", name: "hoogteCm", widget: "number", value_type: "int", min: 1, required: true }
+      - { label: "Minimumprijs (euro)", name: "minimumprijs", widget: "number", value_type: "float", min: 0, required: true }
+      - label: "Formaat (liggend/staand)"
+        name: "orientatie"
+        widget: "select"
+        options: ["liggend", "staand", "vierkant"]
+        default: "liggend"
+        required: false
+        hint: "Bepaalt de vorm van de kaart in de galerij. Staat je werk hoger dan breed? Kies dan 'staand'."
+      - { label: "Materiaal", name: "materiaal", widget: "string", required: false }
       - { label: "Omschrijving", name: "body", widget: "markdown", required: false }
 
   # ── Verhaal: the front-page story ──────────────────────────────────
@@ -61,7 +69,6 @@ collections:
         file: "src/content/settings/global.json"
         fields:
           - { label: "Sitenaam", name: "siteTitle", widget: "string" }
-          - { label: "Tikkie-QR-code (afbeelding)", name: "tikkieQr", widget: "image", hint: "De QR-afbeelding uit de Tikkie-app. Toont op de doneerpagina en in het Betaal-venster." }
-          - { label: "Tikkie betaallink (URL)", name: "tikkieUrl", widget: "string", hint: "De link die getoond wordt bij 'Open betaallink'." }
+          - { label: "Tikkie betaallink (URL)", name: "tikkieUrl", widget: "string", hint: "De Tikkie-link voor donaties. Staat op de doneerpagina." }
           - { label: "Contact-e-mailadres", name: "contactEmail", widget: "string" }
           - { label: "Voettekst", name: "footerNote", widget: "text" }

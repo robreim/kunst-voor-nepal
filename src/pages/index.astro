@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import ArtGrid from '../components/ArtGrid.astro';
 import ArtworkModal from '../components/ArtworkModal.astro';
-import PayModal from '../components/PayModal.astro';
 
 const settings = (await getCollection('settings'))[0].data;
 const story = (await getCollection('story'))[0];
@@ -28,98 +27,33 @@ const { Content } = await story.render();
     />
     <link rel="stylesheet" href="/styles/global.css" />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🇳🇵</text></svg>" />
-    <!-- Sold-state overlay: loads the accept site's freshly-built sold-state.js.
-         Script tags bypass CORS, so production picks up 'sold' flips with 0 credits.
-         Falls back gracefully if the accept site is unreachable. -->
-    <script src="https://accept--magical-haupia-491c3b.netlify.app/sold-state.js" onerror="window.SOLD_STATE=null"></script>
     <script is:inline>
-      // Apply sold-state overlay: hide Betaal + badge sold pieces whose code is
-      // in SOLD_STATE (from the accept site). Runs when that script has loaded.
-      function applySoldState() {
-        if (!window.SOLD_STATE) return;
-        document.querySelectorAll('[data-art-number]').forEach((card) => {
-          if (window.SOLD_STATE[card.dataset.artNumber]) {
-            const li = card.closest('li');
-            if (li) li.classList.add('is-sold');
-            const pay = card.querySelector('.pay-open');
-            if (pay) pay.remove();
-            if (!card.querySelector('.card__badge')) {
-              const media = card.querySelector('.card__media');
-              if (media) {
-                const b = document.createElement('span');
-                b.className = 'card__badge';
-                b.textContent = 'Verkocht';
-                media.appendChild(b);
-              }
-            }
-          }
-        });
-      }
-      if (window.SOLD_STATE) applySoldState();
-      else window.addEventListener('load', () => setTimeout(applySoldState, 500));
-
       // Loginmagie: een e-mail-link met een inlogtoken die op de homepage belandt,
       // stuurt door naar /admin waar de token wordt afgehandeld.
       if ((location.hash || '').match(/(recovery|invite)_token=/)) {
         location.replace('/admin' + location.hash);
       }
-      // One global listener opens the right piece's pay modal when a "Betaal" button is clicked.
-      // The piece's number and pay link live in data-* attributes; the shared Tikkie link
-      // (data-pay-url) and QR image (data-qr) come from the page itself.
-      document.addEventListener('click', (event) => {
-        // ── Open artwork detail modal on card click (image or body) ──
-        const artEl = event.target.closest('.art-open');
-        if (artEl) {
-          const modal = document.querySelector('.art-modal');
-          if (modal) {
-            modal.querySelector('#art-modal-img').src = artEl.dataset.artImage;
-            modal.querySelector('#art-modal-img').alt = `${artEl.dataset.artTitle} — ${artEl.dataset.artArtist}`;
-            modal.querySelector('#art-modal-title').textContent = artEl.dataset.artTitle;
-            modal.querySelector('#art-modal-number').textContent = `nr. ${artEl.dataset.artNumber}`;
-            modal.querySelector('#art-modal-artist').textContent = artEl.dataset.artArtist;
-            modal.querySelector('#art-modal-dimensions').textContent = artEl.dataset.artDimensions;
-            modal.querySelector('#art-modal-material').textContent = artEl.dataset.artMaterial;
-            modal.querySelector('#art-modal-price').textContent = artEl.dataset.artPrice;
-            modal.querySelector('#art-modal-description').textContent = artEl.dataset.artDescription;
-            const payBtn = modal.querySelector('#art-modal-pay');
-            payBtn.dataset.number = artEl.dataset.artNumber;
-            payBtn.style.display = artEl.dataset.artSold ? 'none' : 'inline-block';
-            modal.showModal();
-          }
-          return;
-        }
 
-        // ── Open payment modal ──
-        const openBtn = event.target.closest('.pay-open');
-        if (!openBtn) return;
-        const number = openBtn.dataset.number;
-        const modal = document.querySelector('.pay-modal');
+      // Open the artwork detail modal when a card (image or body) is clicked.
+      document.addEventListener('click', (event) => {
+        const artEl = event.target.closest('.art-open');
+        if (!artEl) return;
+        const modal = document.querySelector('.art-modal');
         if (!modal) return;
-        const callout = modal.querySelector('.pay-modal__callout');
-        const piece = modal.querySelector('.pay-modal__piece');
-        if (callout) {
-          callout.textContent = `Vermeld nummer ${number} in de omschrijving bij je betaling. Zo weten we welk kunstwerk het geld betreft.`;
-        }
-        if (piece) piece.textContent = `Kunstwerk nr. ${number}`;
+        modal.querySelector('#art-modal-img').src = artEl.dataset.artImage;
+        modal.querySelector('#art-modal-img').alt = `${artEl.dataset.artTitle} — ${artEl.dataset.artArtist}`;
+        modal.querySelector('#art-modal-title').textContent = artEl.dataset.artTitle;
+        modal.querySelector('#art-modal-number').textContent = `nr. ${artEl.dataset.artNumber}`;
+        modal.querySelector('#art-modal-artist').textContent = artEl.dataset.artArtist;
+        modal.querySelector('#art-modal-dimensions').textContent = artEl.dataset.artDimensions;
+        modal.querySelector('#art-modal-material').textContent = artEl.dataset.artMaterial;
+        modal.querySelector('#art-modal-price').textContent = artEl.dataset.artPrice;
+        modal.querySelector('#art-modal-description').textContent = artEl.dataset.artDescription;
         modal.showModal();
       });
-      document.querySelectorAll('.pay-modal__close, .art-modal__close').forEach((btn) => {
+
+      document.querySelectorAll('.art-modal__close').forEach((btn) => {
         btn.addEventListener('click', () => btn.closest('dialog').close());
-      });
-      // Clicking the Betaal button inside the artwork modal opens the pay modal.
-      document.addEventListener('click', (event) => {
-        const payBtn = event.target.closest('#art-modal-pay');
-        if (!payBtn) return;
-        const artModal = document.querySelector('.art-modal');
-        if (artModal && artModal.open) artModal.close();
-        const payModal = document.querySelector('.pay-modal');
-        if (payModal) {
-          const callout = payModal.querySelector('.pay-modal__callout');
-          const piece = payModal.querySelector('.pay-modal__piece');
-          if (callout) callout.textContent = `Vermeld nummer ${payBtn.dataset.number} in de omschrijving bij je betaling. Zo weten we welk kunstwerk het geld betreft.`;
-          if (piece) piece.textContent = `Kunstwerk nr. ${payBtn.dataset.number}`;
-          payModal.showModal();
-        }
       });
     </script>
   </head>
@@ -175,7 +109,6 @@ const { Content } = await story.render();
       <p class="site-footer__love">met liefde voor Nepal ✦</p>
     </footer>
 
-    <PayModal number={1} qr={settings.tikkieQr} payUrl={settings.tikkieUrl} />
     <ArtworkModal />
   </body>
 </html>

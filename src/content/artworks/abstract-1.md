@@ -6,6 +6,6 @@ image: /art/nede22079.jpg
 breedteCm: 80
 hoogteCm: 60
 minimumprijs: 70
+orientatie: liggend
 materiaal: acryl
-sold: false
 ---

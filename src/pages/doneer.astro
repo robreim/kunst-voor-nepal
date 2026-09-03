@@ -2,13 +2,7 @@
 import { getCollection } from 'astro:content';
 
 const settings = (await getCollection('settings'))[0].data;
-const qr = settings.tikkieQr;
 const payUrl = settings.tikkieUrl;
-const steps = [
-  'Scan de code met je bankapp',
-  'Betaal via iDeal of Wero',
-  'Klaar — dank je wel ✦',
-];
 ---
 
 <!doctype html>
@@ -19,7 +13,7 @@ const steps = [
     <title>Doneer — Kunst voor Nepal</title>
     <meta
       name="description"
-      content="Doe een donatie voor de slachtoffers van de overstromingen in Nepal. Betaal eenvoudig via Tikkie met iDeal of Wero. Alle opbrengsten gaan rechtstreeks naar de getroffenen."
+      content="Doe een donatie voor de slachtoffers van de overstromingen in Nepal. Betaal eenvoudig via Tikkie. Alle opbrengsten gaan rechtstreeks naar de getroffenen."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -53,20 +47,15 @@ const steps = [
         </p>
       </section>
 
-      <section class="donate" aria-label="Betaal met Tikkie">
+      <section class="donate" aria-label="Doneer via Tikkie">
         <div class="donate-card">
-          <h2 class="donate-card__title">Scan en betaal</h2>
-          <div class="donate-card__qr">
-            <img src={qr} alt="QR-code voor de Tikkie donatielink" width="280" height="280" />
-            <p class="donate-card__scan-label">Scan met je bankapp</p>
-          </div>
-          <p class="donate-card__steps">
-            <span>1. {steps[0]}</span>
-            <span>2. {steps[1]}</span>
-            <span>3. {steps[2]}</span>
+          <h2 class="donate-card__title">Doneer via Tikkie</h2>
+          <p class="donate-card__note">
+            Je krijgt een betaalverzoek in je bankapp — snel en veilig.
           </p>
-          <a class="btn btn--ember" href={payUrl} target="_blank" rel="noopener">Open betaallink</a>
-          <p class="donate-card__note">Geen QR? Gebruik de knop hierboven.</p>
+          <a class="btn btn--ember donate-card__btn" href={payUrl} target="_blank" rel="noopener">
+            Doneer via Tikkie
+          </a>
         </div>
       </section>
     </main>

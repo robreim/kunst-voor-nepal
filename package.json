@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
-    "gen:sold": "node scripts/gen-sold-state.mjs",
-    "build": "npm run gen:sold && astro build",
+    "assign:codes": "node scripts/assign-codes.mjs",
+    "build": "npm run assign:codes && astro build",
     "preview": "astro preview"
   },
   "dependencies": {

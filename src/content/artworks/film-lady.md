@@ -1,11 +1,11 @@
 ---
 title: Film-lady
 artist: Marian de Vries
-number: ""
+number: "X836"
 image: /art/film-lady.jpg
 breedteCm: 60
 hoogteCm: 80
 minimumprijs: 1
+orientatie: staand
 materiaal: acryl
-sold: false
 ---

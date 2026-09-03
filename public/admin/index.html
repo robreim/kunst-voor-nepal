@@ -3,7 +3,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="CMS_CONFIG_URL" content="config.local.yml" />
+    <meta name="CMS_CONFIG_URL" content="config.yml" />
+    <script>
+      // Lokaal (npm run dev) gebruiken we de test-repo-config zonder login;
+      // overal elders (accept/productie) de echte git-gateway-config.
+      if (/localhost|127\.0\.0\.1|0\.0\.0\.0/.test(location.hostname)) {
+        document.querySelector('meta[name="CMS_CONFIG_URL"]').setAttribute('content', 'config.local.yml');
+      }
+    </script>
     <title>Beheer — Kunst voor Nepal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -147,13 +154,24 @@
         function startDecap() {
           if (started) return;
           started = true;
-          // Verberg de hele inlog-wrap (kaart + centrering) zodra de
-          // CMS-interface start — anders breekt de Decap-layout.
+          // Haal de inlog-kaart weg zodra de CMS-interface (Decap) er echt is.
+          // Decap mount zichzelf in #nc-root; pas dán verdwijnt de auth-wrap
+          // definitief — dit voorkomt dat de kaart blijft staan en je moet
+          // scrollen om bij de CMS te komen.
           var wrap = document.querySelector('.auth-wrap');
           if (wrap) wrap.style.display = 'none';
+          (function removeWrapWhenCmsReady() {
+            var wrap2 = document.querySelector('.auth-wrap');
+            if (!wrap2) return;
+            var ncRoot = document.getElementById('nc-root');
+            if (ncRoot && ncRoot.children.length) {
+              wrap2.remove();
+              return;
+            }
+            setTimeout(removeWrapWhenCmsReady, 200);
+          })();
           try {
             if (window.CMS) {
-              registerNumberHook();
               // Nederlandse beheerinterface (Decap bundelt alleen en).
               // De knop heet "Opslaan" in plaats van "Publiceer".
               if (window.NL_LOCALE) {
@@ -165,70 +183,6 @@
           } catch (e) {
             setStatus('Beheer kon niet starten. Ververs de pagina of neem contact op.', true);
           }
-        }
-
-        // Registers a preSave hook: before an artwork is committed, if it has
-        // no number yet, generate a unique "X548" code (letter + 3 digits) that
-        // doesn't collide with any existing artwork.
-        //
-        // Decap contract (verified in decap-cms-core backend.ts / registry.js):
-        // - handler receives { entry, author }; entry.data is an Immutable.Map
-        // - handler must RETURN the modified data Map (new object, not mutation)
-        // - Decap does entry.set('data', result) when the return is defined
-        //
-        // Conflict check: the handler must return synchronously (async .then()
-        // results are discarded), so existing codes are read ONCE at init time
-        // (entries are already in memory by then) and re-used for re-rolls.
-        function registerNumberHook() {
-          var letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
-          var taken = {};
-          function gen() {
-            var l = letters[Math.floor(Math.random() * letters.length)];
-            var n = 105 + Math.floor(Math.random() * 895);
-            return l + n;
-          }
-          function genUnique() {
-            var c = gen();
-            while (taken[c]) { c = gen(); }
-            return c;
-          }
-          // Read existing codes once at init (sync best-effort; entries loaded).
-          try {
-            var backend = window.CMS.getBackend && window.CMS.getBackend();
-            var col = backend && backend.getCollection && backend.getCollection('artworks');
-            if (col && col.get && col.getEntries && col.getEntries.__esModule) {
-              /* entries may be a promise; handled below */
-            }
-            var entries = col && col.getEntries ? col.getEntries() : null;
-            if (entries && entries.forEach) {
-              entries.forEach(function (e) {
-                var n = e && e.data && e.data.number;
-                if (n) taken[n] = true;
-              });
-            } else if (entries && entries.then) {
-              entries.then(function (es) {
-                (es || []).forEach(function (e) {
-                  var n = e && e.data && e.data.number;
-                  if (n) taken[n] = true;
-                });
-              });
-            }
-          } catch (e) { /* best-effort; duplicates are astronomically unlikely */ }
-
-          try {
-            window.CMS.registerEventListener({
-              name: 'preSave',
-              handler: function (data, _opts) {
-                // data = { entry, author }; entry.data = Immutable.Map
-                var entry = data && data.entry;
-                var d = entry && entry.get ? entry.get('data') : null;
-                if (!d) return d;
-                if (d.get && d.get('number')) return d;
-                // Return a NEW data map with a unique code (Immutable semantics).
-                return d.set ? d.set('number', genUnique()) : d;
-              },
-            });
-          } catch (e) { /* preSave unavailable; schema still guards */ }
         }
 
         // LOKAAL: geen Netlify-Identity — start de widget NIET (zijn login-modal

@@ -6,6 +6,6 @@ image: /art/nede21837.jpg
 breedteCm: 40
 hoogteCm: 30
 minimumprijs: 60
+orientatie: liggend
 materiaal: olie
-sold: false
 ---

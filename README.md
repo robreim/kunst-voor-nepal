@@ -32,7 +32,7 @@ main (productie, kunstvoornepal.nl)          accept (staging, accept--magical-ha
 ```bash
 npm install
 npm run dev      # http://localhost:4321
-npm run build    # output in dist/ (draait eerst gen:sold)
+npm run build    # output in dist/ (draait eerst assign:codes)
 npm run preview  # preview van de build
 ```
 
@@ -52,45 +52,33 @@ npm run preview  # preview van de build
 |---|---|---|---|
 | Titel | string | ja | |
 | Kunstenaar | string | ja | |
-| Nummer | hidden (`artcode`) | auto | Automatisch gegenereerd (bijv. `X548`), onzichtbaar, uniek. Wordt bij `preSave` toegekend. |
+| Nummer | hidden (`artcode`) | auto | Automatisch gegenereerd (bijv. `X548`), onzichtbaar, uniek. Wordt toegekend bij elke build (`scripts/assign-codes.mjs`) — ook als een werk zonder code is opgeslagen. |
 | Foto | image | ja | |
 | Breedte (cm) | number int | **ja** | |
 | Hoogte (cm) | number int | **ja** | |
 | Minimumprijs (€) | number float | **ja** | Toont "vanaf €…" op de kaart |
+| Formaat | select | nee | `liggend` / `staand` / `vierkant` — bepaalt de vorm van de kaart in de galerij (staand werk wordt een hoge kaart, geen afgesneden 4:3-kader). Bestaande werken kregen dit automatisch uit hun cm-maten. |
 | Materiaal | string | nee | Vrij tekstveld, toont op de kaart |
-| Verkocht? | boolean | nee | Zet de "Verkocht"-stempel + grijs, verbergt Betaal |
 | Omschrijving | markdown | nee | Toont in de detail-popup |
 
 ### Site-teksten
 
 - **Verhaal** (homepage): `src/content/story/story.md`
-- **Instellingen** (site-titel, Tikkie-QR, betaallink, e-mail, voettekst): `src/content/settings/global.json`
+- **Instellingen** (site-titel, Tikkie-betaallink, e-mail, voettekst): `src/content/settings/global.json`
 
 ---
 
 ## De accept-workflow (dagelijks gebruik)
 
-1. Kunstenaar gaat naar `https://accept--magical-haupia-491c3b.netlify.app/admin`, logt in, kiest "Kunstwerk toevoegen", vult titel/kunstenaar/foto/afmetingen/prijs in, klikt **Opslaan**.
+1. Kunstenaar gaat naar `https://accept--magical-haupia-491c3b.netlify.app/admin`, logt in, kiest "Kunstwerk toevoegen", vult titel/kunstenaar/foto/afmetingen/prijs/formaat in, klikt **Opslaan**.
 2. De upload (tekst + foto) wordt gecommit naar de **`accept`-branch** → Netlify bouwt gratis → direct zichtbaar op de accept-site.
 3. De eigenaar controleert. Is de oogst klaar? **Merge `accept` → `main`**, dan in Netlify **Deploys → Publish deploy** (één productie-deploy = 15 credits voor de hele batch).
-4. Wil je *alleen* iets als "verkocht" markeren zonder productie-deploy? Vink in de accept-CMS "Verkocht?" aan → gratis accept-deploy → productie pikt het op via de **sold-state-overlay** (zie hieronder).
 
 ---
 
-## Sold-state overlay (sold flippen zonder credits)
+## Codes zonder nummer (automatisch bij elke build)
 
-Productie laadt een klein script van de accept-site:
-
-```html
-<script src="https://accept--magical-haupia-491c3b.netlify.app/sold-state.js" onerror="window.SOLD_STATE=null"></script>
-```
-
-- `sold-state.js` wordt **bij elke build gegenereerd** door `scripts/gen-sold-state.mjs` (via `npm run gen:sold`, gekoppeld aan `npm run build`).
-- Het bevat `window.SOLD_STATE = { "X548": true, ... }` voor alle verkochte werken.
-- Productie verbergt daarmee de Betaal-knop + toont "Verkocht" op werken die in `SOLD_STATE` staan — zonder productie-deploy.
-- **Fallback:** als de accept-site onbereikbaar is, blijft productie de statische toestand tonen (geen crash).
-
-> Let op: de overlay heeft **éénmalig** een productie-deploy nodig om actief te worden (de `<script>`-tag moet in de productie-HTML staan). Daarna werken sold-flips met 0 credits.
+Werken die zonder nummer worden opgeslagen (de Decap-`preSave`-hook bleek onbetrouwbaar) krijgen bij **elke build** automatisch een unieke code via `scripts/assign-codes.mjs` (`npm run assign:codes`, gekoppeld aan `npm run build`). De code is van de vorm `X548` (letter + 3 cijfers), botst niet met bestaande codes en wordt teruggeschreven naar het `.md`-bestand.
 
 ---
 
@@ -141,10 +129,10 @@ public/
   art/              Geüploade kunstwerk-foto's (via CMS/media)
   styles/global.css Alle site-styling
 scripts/
-  gen-sold-state.mjs   Genereert public/sold-state.js bij elke build
+  assign-codes.mjs     Kent ontbrekende werknummers toe bij elke build
   identity-email-wizard.sh  (optioneel hulpscript, niet nodig voor gebruik)
 src/
-  components/       ArtGrid, ArtworkModal, PayModal, PayModalContent
+  components/       ArtGrid, ArtworkModal
   content/          artworks/*.md, story/story.md, settings/global.json
   pages/            index, galerij, doneer (+ admin shim op index)
 netlify.toml        Build-command + publish-dir

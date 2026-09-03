@@ -1,13 +1,13 @@
 ---
 title: Scheveningen, 2015, “zuidelijke havenhoofd, gezicht op Hoek van Holland”
 artist: Hans Emeis
-number: ""
+number: "X764"
 image: /art/naamloos26407.jpg
 breedteCm: 60
 hoogteCm: 40
 minimumprijs: 65
+orientatie: liggend
 materiaal: Museumkwaliteit print
-sold: false
 ---
 UltraChrome, Aqua Rag papier (240 grs)
 
