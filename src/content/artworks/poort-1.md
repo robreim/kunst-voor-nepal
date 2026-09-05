@@ -1,8 +1,8 @@
 ---
-title: Poort
+title: Vleugel 3
 artist: Thijs Veraart
 number: ""
-image: /art/poort.jpg
+image: /art/vleugel-3.jpg
 breedteCm: 40
 hoogteCm: 30
 minimumprijs: 60
