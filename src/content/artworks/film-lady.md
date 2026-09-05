@@ -1,6 +1,6 @@
 ---
 title: Film-lady
-artist: Marian de Vries
+artist: Marianne de Vries
 number: X836
 image: /art/film-lady.jpg
 breedteCm: 60
