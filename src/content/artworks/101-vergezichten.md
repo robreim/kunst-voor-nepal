@@ -7,6 +7,5 @@ breedteCm: 80
 hoogteCm: 60
 minimumprijs: 70
 orientatie: liggend
-materiaal: acryl
+materiaal: acryl, katoen
 ---
-Dit is een topper!
