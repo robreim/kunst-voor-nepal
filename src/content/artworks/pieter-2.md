@@ -1,6 +1,6 @@
 ---
 title: Pieter 2
-artist: P{meter vd Broeke
+artist: Pieter vd Broeke
 number: ""
 image: /art/pieter2.jpg
 breedteCm: 50
