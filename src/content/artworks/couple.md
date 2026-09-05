@@ -7,5 +7,5 @@ breedteCm: 31
 hoogteCm: 67
 minimumprijs: 80
 orientatie: staand
-materiaal: pastelkrijt en inkt, katoen
+materiaal: pastelkrijt en inkt, papier, ingelijst
 ---
