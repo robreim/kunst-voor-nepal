@@ -1,11 +1,11 @@
 ---
-title: Boom 1
+title: Vleugel 1
 artist: Thijs Veraart
 number: ""
-image: /art/boom-1.jpg
-breedteCm: 60
-hoogteCm: 80
-minimumprijs: 90
-orientatie: staand
+image: /art/vleugel-1.jpg
+breedteCm: 40
+hoogteCm: 30
+minimumprijs: 60
+orientatie: liggend
 materiaal: olie op paneel, ingelijst
 ---
