@@ -2,7 +2,7 @@
 title: Just Colors
 artist: Jan Fritz
 number: F464
-image: /art/naamloos6008.jpg
+image: /art/just-colors.jpg
 breedteCm: 40
 hoogteCm: 90
 minimumprijs: 180
