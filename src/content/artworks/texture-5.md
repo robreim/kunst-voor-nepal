@@ -1,5 +1,5 @@
 ---
-title: Texture 5
+title: Texture 5 (groen/zwart)
 artist: Jan Fritz
 number: ""
 image: /art/texture-5.jpg
