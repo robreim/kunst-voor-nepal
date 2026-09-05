@@ -7,6 +7,5 @@ breedteCm: 35
 hoogteCm: 45
 minimumprijs: 60
 orientatie: staand
-materiaal: olie
+materiaal: olie, katoen
 ---
-heel bijzonder
