@@ -1,8 +1,8 @@
 ---
 title: Red on Black
 artist: Jan Fritz
-number: "K471"
-image: /art/red-black1.jpg
+number: K471
+image: /art/red-black.jpg
 breedteCm: 90
 hoogteCm: 70
 minimumprijs: 80
