@@ -2,7 +2,7 @@
 title: Texture 3 (blauw/wit)
 artist: Jan Fritz
 number: N654
-image: /art/nede21837.jpg
+image: /art/texture-3.jpg
 breedteCm: 40
 hoogteCm: 30
 minimumprijs: 60
