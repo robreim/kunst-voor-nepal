@@ -1,11 +1,11 @@
 ---
-title: Vleugel 1
-artist: Thijs Veraart
+title: Pieter 5
+artist: Pieter vd Broeke
 number: ""
-image: /art/vleugel-1.jpg
-breedteCm: 40
-hoogteCm: 30
-minimumprijs: 60
+image: /art/pieter5.jpg
+breedteCm: 80
+hoogteCm: 60
+minimumprijs: 90
 orientatie: liggend
-materiaal: olie op paneel, ingelijst
+materiaal: gemengde techniek, katoen, ingelijst
 ---
