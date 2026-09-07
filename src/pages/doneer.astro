@@ -2,7 +2,13 @@
 import { getCollection } from 'astro:content';
 
 const settings = (await getCollection('settings'))[0].data;
-const payUrl = settings.tikkieUrl;
+const betaalverzoekUrl = settings.betaalverzoekUrl;
+const qr = settings.betaalverzoekQr;
+const steps = [
+  'Scan de code met je bankapp',
+  'Controleer het bedrag',
+  'Betaal — dank je wel ✦',
+];
 ---
 
 <!doctype html>
@@ -13,7 +19,7 @@ const payUrl = settings.tikkieUrl;
     <title>Doneer — Kunst voor Nepal</title>
     <meta
       name="description"
-      content="Doe een donatie voor de slachtoffers van de overstromingen in Nepal. Betaal eenvoudig via Tikkie. Alle opbrengsten gaan rechtstreeks naar de getroffenen."
+      content="Doe een donatie voor de slachtoffers van de overstromingen in Nepal. Betaal eenvoudig via een betaalverzoek. Alle opbrengsten gaan rechtstreeks naar de getroffenen."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,15 +53,22 @@ const payUrl = settings.tikkieUrl;
         </p>
       </section>
 
-      <section class="donate" aria-label="Doneer via Tikkie">
+      <section class="donate" aria-label="Betaal via betaalverzoek">
         <div class="donate-card">
-          <h2 class="donate-card__title">Doneer via Tikkie</h2>
-          <p class="donate-card__note">
-            Je krijgt een betaalverzoek in je bankapp — snel en veilig.
+          <h2 class="donate-card__title">Scan en betaal</h2>
+          <div class="donate-card__qr">
+            <img src={qr} alt="QR-code voor het betaalverzoek" width="280" height="280" />
+            <p class="donate-card__scan-label">Scan met je bankapp</p>
+          </div>
+          <p class="donate-card__steps">
+            <span>1. {steps[0]}</span>
+            <span>2. {steps[1]}</span>
+            <span>3. {steps[2]}</span>
           </p>
-          <a class="btn btn--ember donate-card__btn" href={payUrl} target="_blank" rel="noopener">
-            Doneer via Tikkie
+          <a class="btn btn--ember donate-card__btn" href={betaalverzoekUrl} target="_blank" rel="noopener">
+            Open betaalverzoek
           </a>
+          <p class="donate-card__note">Werkt de QR niet? Gebruik dan de knop hierboven.</p>
         </div>
       </section>
     </main>

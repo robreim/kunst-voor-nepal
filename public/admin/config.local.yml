@@ -58,7 +58,7 @@ collections:
           - { label: "Intro (korte lead)", name: "lead", widget: "text" }
           - { label: "Verhaal", name: "body", widget: "markdown" }
 
-  # ── Instellingen: global settings (Tikkie QR etc.) ─────────────────
+  # ── Instellingen: global settings (betaalverzoek etc.) ────────
   - name: "instellingen"
     label: "Instellingen"
     media_folder: "public/img"
@@ -69,6 +69,7 @@ collections:
         file: "src/content/settings/global.json"
         fields:
           - { label: "Sitenaam", name: "siteTitle", widget: "string" }
-          - { label: "Tikkie betaallink (URL)", name: "tikkieUrl", widget: "string", hint: "De Tikkie-link voor donaties. Staat op de doneerpagina." }
+          - { label: "Betaalverzoek-URL", name: "betaalverzoekUrl", widget: "string", hint: "De betaalverzoek-link (bijv. Triodos) voor donaties. Staat op de doneerpagina." }
+          - { label: "QR-code (afbeelding)", name: "betaalverzoekQr", widget: "image", hint: "De QR-code die bij het betaalverzoek hoort." }
           - { label: "Contact-e-mailadres", name: "contactEmail", widget: "string" }
           - { label: "Voettekst", name: "footerNote", widget: "text" }

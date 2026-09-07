@@ -1,6 +1,7 @@
 {
   "siteTitle": "Kunst voor Nepal",
-  "tikkieUrl": "https://example.com/tikkie-paylink-placeholder",
+  "betaalverzoekUrl": "https://betaalverzoek.triodos.nl/rtp/angular/overview?id=ffb4fb6f-5f3e-4882-83e7-f2cde1324525",
+  "betaalverzoekQr": "/img/betaalverzoek-qr.jpg",
   "contactEmail": "kunstvoornepal@example.com",
   "footerNote": "Alle opbrengsten gaan naar de slachtoffers van de overstromingen in Nepal en hun families."
 }
