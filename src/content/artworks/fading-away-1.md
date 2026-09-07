@@ -9,4 +9,3 @@ minimumprijs: 80
 orientatie: staand
 materiaal: acryl, katoen
 ---
-Drie doeken van 30x40 in een zwarte baklijst
