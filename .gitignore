@@ -7,3 +7,6 @@ netlify/
 *.log
 .env
 .env.*
+
+# Resized-image originals (git history keeps the true originals)
+public/art/originals/
