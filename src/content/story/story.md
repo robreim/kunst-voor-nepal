@@ -23,7 +23,6 @@ donderdag 1 oktober, van 14.00 tot 16.00 uur.\
 vrijdag 2 oktober, van 14.00 tot 16.00 uur.\
 zaterdag 3 oktober, van 14.00 tot 16.00 uur.
 
-\
 Tijdens de veiling komen in totaal circa zestig werken (schilderijen, tekeningen en enkele foto's) van Haagse kunstenaars onder de hamer.
 
 Op de site vindt u foto's, informatie en de startprijs van de kunstwerken. In de aanloop naar de veiling kunnen nog kunstwerken worden toegevoegd.
@@ -32,6 +31,6 @@ Gekochte kunst kunt u direct meenemen. Grotere werken kunnen later worden opgeha
 
 Graag tot ziens op zondag 4 oktober.
 
-Pieter van den Broeke (pietervandenbroeke.nl)\
-Jan Fritz (janfritz.nl)\
-Thijs Veraart (thijsveraart.nl)
+Pieter van den Broeke ([pietervandenbroeke.nl](www.pietervandenbroeke.nl))\
+Jan Fritz ([janfritz.nl](www.janfritz.nl))\
+Thijs Veraart ([thijsveraart.nl](www.thijsveraart.nl))
