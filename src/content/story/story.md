@@ -31,6 +31,6 @@ Gekochte kunst kunt u direct meenemen. Grotere werken kunnen later worden opgeha
 
 Graag tot ziens op zondag 4 oktober.
 
-Pieter van den Broeke ([pietervandenbroeke.nl](www.pietervandenbroeke.nl))\
-Jan Fritz ([janfritz.nl](www.janfritz.nl))\
-Thijs Veraart ([thijsveraart.nl](www.thijsveraart.nl))
+Pieter van den Broeke ([pietervandenbroeke.nl](https://www.pietervandenbroeke.nl))\
+Jan Fritz ([janfritz.nl](https://www.janfritz.nl))\
+Thijs Veraart ([thijsveraart.nl](https://www.thijsveraart.nl))
