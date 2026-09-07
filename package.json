@@ -6,10 +6,14 @@
   "scripts": {
     "dev": "astro dev",
     "assign:codes": "node scripts/assign-codes.mjs",
-    "build": "npm run assign:codes && astro build",
+    "resize:art": "node scripts/resize-art.mjs",
+    "build": "npm run assign:codes && npm run resize:art && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
     "astro": "^5.7.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4"
   }
 }
