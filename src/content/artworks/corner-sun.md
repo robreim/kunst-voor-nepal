@@ -9,4 +9,3 @@ minimumprijs: 90
 orientatie: staand
 materiaal: gemengde techniek, katoen
 ---
-Drie doeken van 30x40 in een zwarte baklijst
