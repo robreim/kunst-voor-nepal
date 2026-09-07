@@ -1,10 +1,37 @@
 ---
-title: "Ze verloren alles. Wij verkopen onze kunst."
-lead: "In de zomer van 2026 werd Nepal getroffen door verwoestende overstromingen. Dorpen spoelden weg. Families verloren hun huis, hun oogst, hun dierbaren. Wij zijn een groep kunstenaars die niet aan de kant kan staan."
+title: Ze verloren alles. Wij verkopen onze kunst.
+lead: De verwoestende vloedgolf die op 26 augustus door de Nepalese Himalaya
+  raasde, heeft een ongekende catastrofe veroorzaakt. Duizenden mensen verloren
+  het leven door de metershoge stroom modder en stenen die door de vallei van de
+  Trishuli-rivier kolkte. Huizen, scholen, bruggen en wegen werden verwoest.
+  Lokale gemeenschappen hebben dringend behoefte aan schoon drinkwater, voedsel,
+  medische zorg en onderdak. Daarna wacht de loodzware taak van wederopbouw van
+  het getroffen gebied.
 ---
+Een groepje Haagse kunstenaars organiseert een veiling met als doel de Nepalese bevolking te steunen. De volledige opbrengst zal worden overgemaakt naar de Stichting Nepal Fonds in Utrecht (nepalfonds.nl). Deze stichting zorgt ervoor dat het geld ten goede komt aan degenen die het hardst hulp behoeven. 
 
-Daarom verkopen we hier ons werk. **Alle opbrengsten gaan rechtstreeks naar de slachtoffers en hun families.** Geen tussenpartijen, geen kosten — elke euro die binnenkomt gaat naar Nepal.
+Wij hopen met uw gulle hulp hieraan een bijdrage te kunnen leveren.
 
-Koop een kunstwerk uit onze galerij, of doe een directe donatie. Elke bijdrage, hoe klein ook, maakt een verschil voor een gezin dat alles kwijt is.
+De veiling vindt plaats op:
 
-> *Dit is voorbeeldtekst. Vervang hem met het echte verhaal via de CMS op `/admin` — vertel wat er gebeurd is, waar het geld naartoe gaat, en wie jullie zijn.*
+**Zondag 4 oktober**, van 14.00 tot 16.00 uur\
+inloop vanaf 13.00 uur\
+in de Barthkapel, Brouwersgracht 2K, Den Haag
+
+**Er zijn kijkmiddagen op:** \
+donderdag 1 oktober, van 14.00 tot 16.00 uur.\
+vrijdag 2 oktober, van 14.00 tot 16.00 uur.\
+zaterdag 3 oktober, van 14.00 tot 16.00 uur.
+
+\
+Tijdens de veiling komen in totaal circa zestig werken (schilderijen, tekeningen en enkele foto's) van Haagse kunstenaars onder de hamer.
+
+Op de site vindt u foto's, informatie en de startprijs van de kunstwerken. In de aanloop naar de veiling kunnen nog kunstwerken worden toegevoegd.
+
+Gekochte kunst kunt u direct meenemen. Grotere werken kunnen later worden opgehaald. Mocht u anderen kennen die graag Nepal willen ondersteunen via de aankoop van een kunstwerk: zegt het voort!
+
+Graag tot ziens op zondag 4 oktober.
+
+Pieter van den Broeke (pietervandenbroeke.nl)\
+Jan Fritz (janfritz.nl)\
+Thijs Veraart (thijsveraart.nl)
