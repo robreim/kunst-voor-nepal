@@ -1,7 +1,7 @@
 ---
 title: Pieter 3
 artist: Pieter vd Broeke
-number: ""
+number: "A850"
 image: /art/pieter3.jpg
 breedteCm: 50
 hoogteCm: 60

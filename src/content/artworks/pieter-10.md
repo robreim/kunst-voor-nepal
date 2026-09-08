@@ -1,7 +1,7 @@
 ---
 title: Pieter 10
 artist: Pieter vd Broeke
-number: ""
+number: "L654"
 image: /art/pieter10.jpg
 breedteCm: 120
 hoogteCm: 100

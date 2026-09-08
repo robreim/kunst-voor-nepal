@@ -1,7 +1,7 @@
 ---
 title: Friends
 artist: Marianne de Vries
-number: ""
+number: "Q478"
 image: /art/friends.jpg
 breedteCm: 30
 hoogteCm: 20

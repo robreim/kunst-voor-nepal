@@ -1,7 +1,7 @@
 ---
 title: Greenish
 artist: Jan Fritz
-number: ""
+number: "S412"
 image: /art/greenish.jpg
 breedteCm: 60
 hoogteCm: 60

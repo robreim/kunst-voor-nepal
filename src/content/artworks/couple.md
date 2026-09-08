@@ -1,7 +1,7 @@
 ---
 title: Couple
 artist: Marianne de Vries
-number: ""
+number: "K313"
 image: /art/couple.jpg
 breedteCm: 31
 hoogteCm: 67

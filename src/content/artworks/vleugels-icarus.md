@@ -1,7 +1,7 @@
 ---
 title: Vleugels Icarus
 artist: Thijs Veraart
-number: ""
+number: "N607"
 image: /art/vleugels-icarus.jpg
 breedteCm: 60
 hoogteCm: 80

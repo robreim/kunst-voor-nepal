@@ -1,7 +1,7 @@
 ---
 title: Louis
 artist: Marianne de Vries
-number: ""
+number: "V666"
 image: /art/louis.jpg
 breedteCm: 40
 hoogteCm: 50

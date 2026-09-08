@@ -1,7 +1,7 @@
 ---
 title: Figuur met Bloem
 artist: Thijs Veraart
-number: ""
+number: "N867"
 image: /art/figuur-met-bloem.jpg
 breedteCm: 50
 hoogteCm: 65

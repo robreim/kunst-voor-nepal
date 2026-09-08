@@ -1,7 +1,7 @@
 ---
 title: Liggende  Figuur met Hond
 artist: Thijs Veraart
-number: ""
+number: "G207"
 image: /art/liggende-figuur-met-hond.jpg
 breedteCm: 50
 hoogteCm: 65

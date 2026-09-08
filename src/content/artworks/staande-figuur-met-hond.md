@@ -1,7 +1,7 @@
 ---
 title: Staande Figuur met Hond
 artist: Thijs Veraart
-number: ""
+number: "M532"
 image: /art/staande-figuur-met-hond.jpg
 breedteCm: 50
 hoogteCm: 65

@@ -1,7 +1,7 @@
 ---
 title: Texture 5 (groen/zwart)
 artist: Jan Fritz
-number: ""
+number: "Y741"
 image: /art/texture-5.jpg
 breedteCm: 40
 hoogteCm: 30

@@ -1,7 +1,7 @@
 ---
 title: Pieter 7
 artist: Pieter vd Broeke
-number: ""
+number: "E927"
 image: /art/pieter7.jpg
 breedteCm: 80
 hoogteCm: 60

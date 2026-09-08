@@ -1,7 +1,7 @@
 ---
 title: Omhelzing
 artist: Thijs Veraart
-number: ""
+number: "W120"
 image: /art/omhelzing.jpg
 breedteCm: 50
 hoogteCm: 65

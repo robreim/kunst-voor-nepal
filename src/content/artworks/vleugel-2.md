@@ -1,7 +1,7 @@
 ---
 title: Vleugel 2
 artist: Thijs Veraart
-number: ""
+number: "E782"
 image: /art/vleugel-2.jpg
 breedteCm: 40
 hoogteCm: 30

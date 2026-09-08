@@ -1,15 +1,19 @@
 // Build-time artwork maintenance.
 //
-// Assigns a unique code to every artwork whose `number` is empty (the Decap
+// Assigns a stable code to every artwork whose `number` is empty (the Decap
 // preSave hook was unreliable: codes silently stayed empty on live accept).
-// Runs at every build, so a work saved without a code gets one on the next
-// deploy — no fragile runtime hook.
+//
+// The code is derived deterministically from the filename (slug), never from
+// randomness, so the same file always gets the same code on any machine and
+// any build. Codes therefore cannot change between deploys, and the gallery
+// sort order is stable. Runs at every build so a new work saved without a
+// code gets one on the next deploy.
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
 
 const dir = 'src/content/artworks';
-const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // no I/O: avoids 1/0 lookalikes
 
-const files = readdirSync(dir).filter((f) => f.endsWith('.md'));
+const files = readdirSync(dir).filter((f) => f.endsWith('.md')).sort();
 const taken = {};
 const byFile = new Map();
 
@@ -22,29 +26,62 @@ for (const f of files) {
   if (code) taken[code] = true;
 }
 
-// Random unique code of the form "L123" not already in use.
-function freshCode() {
-  for (let tries = 0; tries < 500; tries++) {
-    const l = letters[Math.floor(Math.random() * letters.length)];
-    const n = 105 + Math.floor(Math.random() * 895);
+// FNV-1a — deterministic across runs and platforms.
+function hash(s) {
+  let h = 2166136261;
+  for (const ch of s) {
+    h ^= ch.codePointAt(0);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+// Deterministic "L123" code for a slug: hash the slug (then slug:1, slug:2 …
+// on the rare collision) until it lands on a code not already in use. Same
+// slug → same code, on every build, forever.
+function stableCode(slug) {
+  for (let i = 0; i < 1000; i++) {
+    const l = letters[hash(`${slug}:${i}:l`) % letters.length];
+    const n = 105 + (hash(`${slug}:${i}:n`) % 895);
     const c = `${l}${n}`;
     if (!taken[c]) {
       taken[c] = true;
       return c;
     }
   }
-  return `X${Date.now()}`;
+  throw new Error(`geen vrije code voor ${slug}`);
 }
 
 const assigned = [];
 for (const [f, { text, code }] of byFile) {
   if (code) continue;
-  const c = freshCode();
-  // Replace the whole number line (bare or quoted) with a quoted code.
+  const slug = f.replace(/\.md$/, '');
+  const c = stableCode(slug);
   const out = text.replace(/^number:[^\n]*/m, `number: "${c}"`);
   writeFileSync(`${dir}/${f}`, out);
   assigned.push(`${c}  ${f}`);
 }
 
+// Dedupe: when several files carry the same code (Decap once saved the same
+// auto-code for different works), keep the first and re-code the rest
+// deterministically so every code is unique.
+const seen = {};
+const deduped = [];
+for (const [f, { text, code }] of byFile) {
+  if (!code || seen[code]) {
+    if (seen[code]) {
+      // drop the duplicated code from the pool first
+      const slug = f.replace(/\.md$/, '');
+      const c = stableCode(slug);
+      const out = text.replace(/^number:[^\n]*/m, `number: "${c}"`);
+      writeFileSync(`${dir}/${f}`, out);
+      deduped.push(`${c}  ${f}`);
+    }
+    continue;
+  }
+  seen[code] = true;
+}
+
 if (assigned.length) console.log('toegekende codes:\n' + assigned.join('\n'));
-else console.log('geen ontbrekende codes');
+if (deduped.length) console.log('dubbele codes hernummerd:\n' + deduped.join('\n'));
+if (!assigned.length && !deduped.length) console.log('geen ontbrekende codes');

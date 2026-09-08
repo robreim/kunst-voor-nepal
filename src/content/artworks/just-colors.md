@@ -1,7 +1,7 @@
 ---
 title: Just Colors
 artist: Jan Fritz
-number: F464
+number: "L755"
 image: /art/just-colors.jpg
 breedteCm: 40
 hoogteCm: 90

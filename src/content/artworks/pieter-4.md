@@ -1,7 +1,7 @@
 ---
 title: Pieter 4
 artist: Pieter vd Broeke
-number: ""
+number: "X363"
 image: /art/pieter4.jpg
 breedteCm: 60
 hoogteCm: 50

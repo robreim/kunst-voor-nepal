@@ -1,7 +1,7 @@
 ---
 title: Pieter 1
 artist: Pieter vd Broeke
-number: ""
+number: "G696"
 image: /art/pieter1.jpg
 breedteCm: 60
 hoogteCm: 50
