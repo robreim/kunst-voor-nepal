@@ -50,6 +50,8 @@ const { Content } = await story.render();
         modal.querySelector('#art-modal-price').textContent = artEl.dataset.artPrice;
         modal.querySelector('#art-modal-description').textContent = artEl.dataset.artDescription;
         modal.showModal();
+        // Fire-and-forget click count; never blocks or changes the UI.
+        fetch('/api/clicks?code=' + encodeURIComponent(artEl.dataset.artNumber), { method: 'POST' }).catch(() => {});
       });
 
       document.querySelectorAll('.art-modal__close').forEach((btn) => {

@@ -4,3 +4,9 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Expose the click-count function at a clean path.
+[[redirects]]
+  from = "/api/clicks"
+  to = "/.netlify/functions/clicks"
+  status = 200
