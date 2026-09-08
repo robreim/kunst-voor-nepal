@@ -1,5 +1,5 @@
 ---
-title: Ze verloren alles. Wij verkopen onze kunst.
+title: Ze verloren alles. Wij veilen onze kunst.
 lead: De verwoestende vloedgolf die op 26 augustus door de Nepalese Himalaya
   raasde, heeft een ongekende catastrofe veroorzaakt. Duizenden mensen verloren
   het leven door de metershoge stroom modder en stenen die door de vallei van de
