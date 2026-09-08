@@ -121,6 +121,35 @@ Werken die zonder nummer worden opgeslagen (de Decap-`preSave`-hook bleek onbetr
 
 ---
 
+## Bekeken per kunstwerk (view counts)
+
+Elke keer dat iemand een kunstwerk opent (de popup in de galerij) wordt dat geteld. De site blijft statisch: een klein Netlify-requestje schrijft de klik weg naar de Netlify-blobstore — geen database, geen CRUD.
+
+**Aantal bekeken per werk opvragen** — open in je browser of via `curl`:
+
+```bash
+# Accept (staging):
+curl https://accept--magical-haupia-491c3b.netlify.app/api/clicks
+
+# Productie:
+curl https://kunstvoornepal.nl/api/clicks
+```
+
+Antwoord is JSON met per werkcode het aantal keren dat de popup is geopend, bijvoorbeeld:
+
+```json
+{"A514": 3, "B106": 12, "F464": 0}
+```
+
+- Werken die nog nooit zijn geopend komen **niet** voor in de lijst.
+- Codes zonder cijfers die niemand opende, ontbreken dus — dat is geen fout.
+- Elke popup-open telt (ook herhaalde opens van dezelfde bezoeker).
+- De data staat in de Netlify-blobstore van de site (store `art-clicks`), niet in git.
+
+Techniek: `netlify/functions/clicks.mjs` — `POST /api/clicks?code=A514` telt één klik (elke klik is een eigen blob-key, dus gelijktijdige kliks gaan nooit verloren), `GET /api/clicks` geeft de tellingen terug. De functie draait op Netlify; lokaal telt er dus niks tot je `netlify dev` gebruikt.
+
+---
+
 ## Projectstructuur
 
 ```
@@ -131,6 +160,8 @@ public/
 scripts/
   assign-codes.mjs     Kent ontbrekende werknummers toe bij elke build
   identity-email-wizard.sh  (optioneel hulpscript, niet nodig voor gebruik)
+netlify/
+  functions/clicks.mjs Telt popup-opens per kunstwerk (Netlify Blobs)
 src/
   components/       ArtGrid, ArtworkModal
   content/          artworks/*.md, story/story.md, settings/global.json
