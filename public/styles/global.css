@@ -281,7 +281,7 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
   max-width: 67.6rem;
   width: calc(100vw - 2rem);
   max-height: 92vh;
-  position: relative;
+  position: fixed;
 }
 .art-modal::backdrop { background: rgba(36, 31, 24, 0.6); }
 .art-modal__close-wrap {
