@@ -22,7 +22,7 @@ for (const f of files) {
   // number may be bare (B106) or quoted (""). Match both; empty means no code.
   const m = text.match(/^number:\s*"?([^"]*?)"?\s*$/m);
   const code = m && m[1] ? m[1].trim() : '';
-  byFile.set(f, { text, code });
+  byFile.set(f, { text, code, slug: f.replace(/\.md$/, '') });
   if (code) taken[code] = true;
 }
 
@@ -52,14 +52,15 @@ function stableCode(slug) {
   throw new Error(`geen vrije code voor ${slug}`);
 }
 
-const assigned = [];
-for (const [f, { text, code }] of byFile) {
-  if (code) continue;
-  const slug = f.replace(/\.md$/, '');
+function writeCode({ text, slug }, out) {
   const c = stableCode(slug);
-  const out = text.replace(/^number:[^\n]*/m, `number: "${c}"`);
-  writeFileSync(`${dir}/${f}`, out);
-  assigned.push(`${c}  ${f}`);
+  writeFileSync(`${dir}/${slug}.md`, text.replace(/^number:[^\n]*/m, `number: "${c}"`));
+  out.push(`${c}  ${slug}.md`);
+}
+
+const assigned = [];
+for (const [f, entry] of byFile) {
+  if (!entry.code) writeCode(entry, assigned);
 }
 
 // Dedupe: when several files carry the same code (Decap once saved the same
@@ -67,19 +68,12 @@ for (const [f, { text, code }] of byFile) {
 // deterministically so every code is unique.
 const seen = {};
 const deduped = [];
-for (const [f, { text, code }] of byFile) {
-  if (!code || seen[code]) {
-    if (seen[code]) {
-      // drop the duplicated code from the pool first
-      const slug = f.replace(/\.md$/, '');
-      const c = stableCode(slug);
-      const out = text.replace(/^number:[^\n]*/m, `number: "${c}"`);
-      writeFileSync(`${dir}/${f}`, out);
-      deduped.push(`${c}  ${f}`);
-    }
+for (const [f, entry] of byFile) {
+  if (!entry.code || seen[entry.code]) {
+    if (seen[entry.code]) writeCode(entry, deduped);
     continue;
   }
-  seen[code] = true;
+  seen[entry.code] = true;
 }
 
 if (assigned.length) console.log('toegekende codes:\n' + assigned.join('\n'));
