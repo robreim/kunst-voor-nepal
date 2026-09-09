@@ -7,5 +7,5 @@ breedteCm: 80
 hoogteCm: 60
 minimumprijs: 150
 orientatie: liggend
-materiaal: olieverf, linnen
+materiaal: olieverf, linnen, ingelijst
 ---
