@@ -1,5 +1,5 @@
 ---
-title: Ze verloren alles. Wij veilen onze kunst.
+title: Kunst voor Nepal
 lead: De verwoestende vloedgolf die op 26 augustus door de Nepalese Himalaya
   raasde, heeft een ongekende catastrofe veroorzaakt. Duizenden mensen verloren
   het leven door de metershoge stroom modder en stenen die door de vallei van de
@@ -8,7 +8,7 @@ lead: De verwoestende vloedgolf die op 26 augustus door de Nepalese Himalaya
   medische zorg en onderdak. Daarna wacht de loodzware taak van wederopbouw van
   het getroffen gebied.
 ---
-Een groepje Haagse kunstenaars organiseert een veiling met als doel de Nepalese bevolking te steunen. De volledige opbrengst zal worden overgemaakt naar de Stichting Nepal Fonds in Utrecht (nepalfonds.nl). Deze stichting zorgt ervoor dat het geld ten goede komt aan degenen die het hardst hulp behoeven. 
+Een groepje Haagse kunstenaars organiseert een veiling met als doel de Nepalese bevolking te steunen. De volledige opbrengst zal worden overgemaakt naar de Stichting Nepal Fonds in Utrecht ([nepalfonds.nl](http://www.nepalfonds.nl)). Deze stichting zorgt ervoor dat het geld ten goede komt aan degenen die het hardst hulp behoeven. 
 
 Wij hopen met uw gulle hulp hieraan een bijdrage te kunnen leveren.
 
