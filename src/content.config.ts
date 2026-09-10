@@ -29,7 +29,6 @@ const settings = defineCollection({
   schema: z.object({
     siteTitle: z.string().default('Kunst voor Nepal'),
     betaalverzoekUrl: z.string().url(),
-    betaalverzoekQr: z.string().default('/img/betaalverzoek-qr.jpg'),
     contactEmail: z.string().email(),
     footerNote: z.string().default('Alle opbrengsten gaan naar de slachtoffers van de overstromingen in Nepal en hun families.'),
   }),

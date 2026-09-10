@@ -74,6 +74,5 @@ collections:
         fields:
           - { label: "Sitenaam", name: "siteTitle", widget: "string" }
           - { label: "Betaalverzoek-URL", name: "betaalverzoekUrl", widget: "string", hint: "De betaalverzoek-link (bijv. Triodos) voor donaties. Staat op de doneerpagina." }
-          - { label: "QR-code (afbeelding)", name: "betaalverzoekQr", widget: "image", hint: "De QR-code die bij het betaalverzoek hoort." }
           - { label: "Contact-e-mailadres", name: "contactEmail", widget: "string" }
           - { label: "Voettekst", name: "footerNote", widget: "text" }
