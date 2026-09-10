@@ -7,4 +7,5 @@ breedteCm: 18
 hoogteCm: 24
 minimumprijs: 40
 orientatie: staand
+materiaal: olieverf, interferentie verf, iriserende verf op linnen
 ---
