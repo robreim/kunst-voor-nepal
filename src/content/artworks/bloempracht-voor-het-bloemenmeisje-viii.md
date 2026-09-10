@@ -2,7 +2,7 @@
 title: Bloempracht voor het Bloemenmeisje VIII
 artist: Siebrand Weitenberg
 number: ""
-image: /art/bloempracht-voor-het-bloemenmeisje-v.jpg
+image: /art/bloempracht-voor-het-bloemenmeisje-viii.jpg
 breedteCm: 18
 hoogteCm: 24
 minimumprijs: 40
