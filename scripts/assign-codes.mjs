@@ -9,6 +9,7 @@
 // sort order is stable. Runs at every build so a new work saved without a
 // code gets one on the next deploy.
 import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { slug as githubSlug } from 'github-slugger';
 
 const dir = 'src/content/artworks';
 const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // no I/O: avoids 1/0 lookalikes
@@ -16,12 +17,21 @@ const letters = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // no I/O: avoids 1/0 lookalikes
 const files = readdirSync(dir).filter((f) => f.endsWith('.md')).sort();
 const taken = {};
 const byFile = new Map();
+const byId = new Map(); // slug -> file, catches duplicate content ids
 
 for (const f of files) {
   const text = readFileSync(`${dir}/${f}`, 'utf8');
   // number may be bare (B106) or quoted (""). Match both; empty means no code.
   const m = text.match(/^number:\s*"?([^"]*?)"?\s*$/m);
   const code = m && m[1] ? m[1].trim() : '';
+  // Astro slugs the filename the same way; two files that slug to the same id
+  // means one entry silently overwrites the other in the collection.
+  const id = githubSlug(f.replace(/\.md$/, ''));
+  if (byId.has(id)) {
+    console.error(`dubbele id "${id}": ${byId.get(id)} en ${f} — hernoem één van de twee`);
+    process.exitCode = 1;
+  }
+  byId.set(id, f);
   byFile.set(f, { text, code, slug: f.replace(/\.md$/, '') });
   if (code) taken[code] = true;
 }

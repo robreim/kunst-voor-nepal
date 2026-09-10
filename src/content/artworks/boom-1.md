@@ -1,11 +1,11 @@
 ---
-title: Pieter 5
-artist: Pieter vd Broeke
-number: "A514"
-image: /art/pieter5.jpg
-breedteCm: 80
-hoogteCm: 60
+title: Boom 1
+artist: Thijs Veraart
+number: B210
+image: /art/boom-1.jpg
+breedteCm: 60
+hoogteCm: 80
 minimumprijs: 90
-orientatie: liggend
-materiaal: gemengde techniek, katoen, ingelijst
+orientatie: staand
+materiaal: olie op paneel, ingelijst
 ---

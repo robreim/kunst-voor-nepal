@@ -1,7 +1,7 @@
 ---
 title: Thinking
 artist: Rob Freij
-number: ""
+number: "T805"
 image: /art/thinking.jpeg
 breedteCm: 100
 hoogteCm: 70

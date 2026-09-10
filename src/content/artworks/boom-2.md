@@ -1,11 +1,10 @@
 ---
-title: Boom 1
+title: Boom 2
 artist: Thijs Veraart
-number: B210
-image: /art/boom-1.jpg
-breedteCm: 60
-hoogteCm: 80
-minimumprijs: 90
-orientatie: staand
-materiaal: olie op paneel, ingelijst
+number: "L700"
+image: /art/boom-2.jpg
+breedteCm: 50
+hoogteCm: 60
+minimumprijs: 75
+orientatie: liggend
 ---

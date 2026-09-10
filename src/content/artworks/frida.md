@@ -1,7 +1,7 @@
 ---
 title: Frida
 artist: Rob Freij
-number: ""
+number: "D701"
 image: /art/frida.jpeg
 breedteCm: 70
 hoogteCm: 100

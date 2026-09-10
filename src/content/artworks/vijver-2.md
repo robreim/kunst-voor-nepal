@@ -1,7 +1,7 @@
 ---
 title: Vijver 2
 artist: Willy Meijs
-number: ""
+number: "J696"
 image: /art/vijver-2.jpg
 breedteCm: 60
 hoogteCm: 80
