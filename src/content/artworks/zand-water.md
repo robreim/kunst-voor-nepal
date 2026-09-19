@@ -11,4 +11,4 @@ materiaal: Fine Art Print op Hannemühle Baryta, baklijst
 ---
 Blokkenpatroon langs het water van het binnenmeer, waarbij tintverschillen onstaan
 
-door het zand te harken met verschillend gereedschap.
+door het zand te harken met verschillend gereedschap. Formaat zandtekening 35x35 m.
