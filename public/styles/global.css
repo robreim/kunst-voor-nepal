@@ -127,6 +127,22 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 
 /* ── Hero (home) ─────────────────────────────────────────────── */
 .hero { padding: 4.5rem 0 2.5rem; text-align: center; }
+
+/* Achievement ribbon (home + doneer) */
+.ribbon {
+  display: inline-block;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--paper);
+  background: var(--ember);
+  border: 2px solid var(--ember-deep);
+  border-radius: 8px;
+  padding: 0.25rem 1.2rem;
+  margin: 0 auto 1.6rem;
+  transform: rotate(-1.5deg);
+  box-shadow: 3px 3px 0 var(--ember-deep);
+}
 .hero__title {
   font-size: clamp(2.4rem, 6vw, 4.6rem);
   max-width: 20ch;
@@ -378,6 +394,7 @@ main { max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
 
 /* ── Donate page ─────────────────────────────────────────────── */
 .page-doneer { padding-bottom: 3.5rem; }
+.page-doneer .ribbon { margin-top: 0.4rem; }
 .donate { padding: 0.5rem 0 2.5rem; }
 .donate-card {
   max-width: 26rem;
