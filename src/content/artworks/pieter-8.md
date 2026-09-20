@@ -1,6 +1,6 @@
 ---
 title: Pieter 8
-artist: Pieter van de Broeke
+artist: Pieter vd Broeke
 number: ""
 image: /art/pieter8.jpg
 breedteCm: 120
