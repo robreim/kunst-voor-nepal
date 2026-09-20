@@ -1,6 +1,6 @@
 ---
 title: Pieter 2
-artist: Pieter van de Broeke
+artist: Pieter vd Broeke
 number: ""
 image: /art/pieter2.jpg
 breedteCm: 50
