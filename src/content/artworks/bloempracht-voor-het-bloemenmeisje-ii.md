@@ -1,7 +1,7 @@
 ---
 title: Bloempracht voor het Bloemenmeisje II
 artist: Siebrand Weitenberg
-number: ""
+number: "G625"
 image: /art/bloempracht-voor-het-bloemenmeisje-ii.jpg
 breedteCm: 18
 hoogteCm: 24

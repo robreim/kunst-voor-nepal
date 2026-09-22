@@ -1,7 +1,7 @@
 ---
 title: Rode Boom
 artist: Thijs Veraart
-number: ""
+number: "V640"
 image: /art/rode-boom.jpg
 breedteCm: 40
 hoogteCm: 50

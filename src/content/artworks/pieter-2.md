@@ -1,7 +1,7 @@
 ---
 title: Pieter 2
 artist: Pieter vd Broeke
-number: ""
+number: "M684"
 image: /art/pieter2.jpg
 breedteCm: 50
 hoogteCm: 60

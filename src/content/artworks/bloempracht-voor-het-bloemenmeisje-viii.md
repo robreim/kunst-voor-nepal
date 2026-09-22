@@ -1,7 +1,7 @@
 ---
 title: Bloempracht voor het Bloemenmeisje VIII
 artist: Siebrand Weitenberg
-number: ""
+number: "M624"
 image: /art/bloempracht-voor-het-bloemenmeisje-viii.jpg
 breedteCm: 18
 hoogteCm: 24

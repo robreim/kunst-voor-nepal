@@ -1,7 +1,7 @@
 ---
 title: Vleugel 1
 artist: Thijs Veraart
-number: ""
+number: "F987"
 image: /art/vleugel-1.jpg
 breedteCm: 40
 hoogteCm: 30

@@ -1,7 +1,7 @@
 ---
 title: Kop
 artist: Thijs Veraart
-number: ""
+number: "B612"
 image: /art/kop.jpg
 breedteCm: 50
 hoogteCm: 65

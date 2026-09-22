@@ -1,7 +1,7 @@
 ---
 title: An Old Birdy
 artist: Siebrand Weitenberg
-number: ""
+number: "P542"
 image: /art/an-old-birdy.jpg
 breedteCm: 30
 hoogteCm: 30

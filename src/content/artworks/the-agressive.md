@@ -1,7 +1,7 @@
 ---
 title: The Agressive!
 artist: Siebrand Weitenberg
-number: ""
+number: "L189"
 image: /art/the-agressive-.jpg
 breedteCm: 40
 hoogteCm: 40
