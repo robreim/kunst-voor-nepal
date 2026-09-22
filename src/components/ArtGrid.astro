@@ -70,3 +70,12 @@ const artworks = (await getCollection('artworks'))
     })
   }
 </ul>
+
+<script is:inline>
+  // Shuffle the gallery once per page load (no-JS visitors keep the code order).
+  document.currentScript.previousElementSibling.append(
+    ...Array.from(document.currentScript.previousElementSibling.children).sort(
+      () => Math.random() - 0.5,
+    ),
+  );
+</script>
