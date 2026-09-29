@@ -2,7 +2,7 @@
 title: Pieter 2
 artist: Pieter vd Broeke
 number: ""
-image: /art/pieter2.jpg
+image: /art/pieter2a.jpg
 breedteCm: 50
 hoogteCm: 60
 minimumprijs: 70
