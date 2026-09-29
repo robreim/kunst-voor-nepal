@@ -1,5 +1,5 @@
 ---
-title: Pieter 2
+title: Pieter 2a
 artist: Pieter vd Broeke
 number: ""
 image: /art/pieter2a.jpg
