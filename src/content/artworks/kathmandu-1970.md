@@ -1,7 +1,7 @@
 ---
 title: Kathmandu 1970
 artist: Guus Rijven
-number: ""
+number: "Y270"
 image: /art/kathmandu-1970.jpg
 breedteCm: 54
 hoogteCm: 37
