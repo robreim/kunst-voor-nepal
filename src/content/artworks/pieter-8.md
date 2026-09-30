@@ -1,8 +1,8 @@
 ---
-title: Pieter 8
+title: Pieter 8a
 artist: Pieter vd Broeke
-number: "T950"
-image: /art/pieter8.jpg
+number: "C545"
+image: /art/pieter8a.jpg
 breedteCm: 120
 hoogteCm: 100
 minimumprijs: 180
