@@ -1,6 +1,6 @@
 ---
 title: Meisje 2
-artist: Hans Allberts
+artist: Hans Alberts
 number: P542
 image: /art/meisje-2.jpg
 breedteCm: 80
