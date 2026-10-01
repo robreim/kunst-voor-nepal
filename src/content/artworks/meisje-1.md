@@ -1,6 +1,6 @@
 ---
 title: Meisje 1
-artist: Hans Allberts
+artist: Hans Alberts
 number: P542
 image: /art/vrouw.jpg
 breedteCm: 120
