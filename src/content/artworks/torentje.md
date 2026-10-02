@@ -1,6 +1,6 @@
 ---
 title: Torentje
-artist: Jean
+artist: Abeba
 number: P542
 image: /art/torentje.jpg
 breedteCm: 40
