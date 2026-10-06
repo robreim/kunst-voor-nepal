@@ -18,7 +18,7 @@ De veiling vond plaats op:
 
 De veiling is een groot succes geworden. **60% van de werken zijn verkocht** met een opbrengst van **ruim €4500**. Tijdens de veiling zijn in totaal circa zestig werken (schilderijen, tekeningen en enkele foto's) van Haagse kunstenaars onder de hamer geweest.
 
-Op de site vindt u nog nog de kunstwerken die niet op de veiling zijn verkocht. Mocht u daar alsnog interesse voor hebben dan kun u contact opnemen via **janfritz@ziggo.nl**. Deze kan u laten weten of het werk nog beschikbaar is of inmiddels al verkocht is na de veiling.
+Op de site vindt u nog de kunstwerken die niet op de veiling zijn verkocht. Mocht u daar alsnog interesse voor hebben dan kun u contact opnemen via **janfritz@ziggo.nl**. Deze kan u laten weten of het werk nog beschikbaar is of inmiddels verkocht is na de veiling.
 
 **Donaties zijn nog altijd mogelijk via de donatieknop op deze site.Deze blijft tot eind oktober actief.**
 
