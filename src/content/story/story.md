@@ -8,28 +8,23 @@ lead: De verwoestende vloedgolf die op 26 augustus door de Nepalese Himalaya
   medische zorg en onderdak. Daarna wacht de loodzware taak van wederopbouw van
   het getroffen gebied.
 ---
-Een groepje Haagse kunstenaars organiseert een veiling met als doel de Nepalese bevolking te steunen. De volledige opbrengst zal worden overgemaakt naar de Stichting Nepal Fonds in Utrecht ([nepalfonds.nl](http://www.nepalfonds.nl)). Deze stichting zorgt ervoor dat het geld ten goede komt aan degenen die het hardst hulp behoeven. 
+Een groepje Haagse kunstenaars organiseerde een veiling met als doel de Nepalese bevolking te steunen. De volledige opbrengst wordt overgemaakt naar de Stichting Nepal Fonds in Utrecht ([nepalfonds.nl](http://www.nepalfonds.nl)). Deze stichting zorgt ervoor dat het geld ten goede komt aan degenen die het hardst hulp behoeven. 
 
 Wij hopen met uw gulle hulp hieraan een bijdrage te kunnen leveren.
 
-De veiling vindt plaats op:
+De veiling vond plaats op:
 
-**Zondag 4 oktober**, van 14.00 tot 16.00 uur\
-inloop vanaf 13.00 uur\
-in de Barthkapel, Brouwersgracht 2K, Den Haag
+**Zondag 4 oktober** in de Barthkapel in Den Haag
 
-**Er zijn kijkmiddagen op:** \
-donderdag 1 oktober, van 14.00 tot 16.00 uur.\
-vrijdag 2 oktober, van 14.00 tot 16.00 uur.\
-zaterdag 3 oktober, van 14.00 tot 16.00 uur.
+De veiling is een groot succes geworden. **60% van de werken zijn verkocht** met een opbrengst van **ruim €4500**. Tijdens de veiling zijn in totaal circa zestig werken (schilderijen, tekeningen en enkele foto's) van Haagse kunstenaars onder de hamer geweest.
 
-Tijdens de veiling komen in totaal circa zestig werken (schilderijen, tekeningen en enkele foto's) van Haagse kunstenaars onder de hamer.
+Op de site vindt u nog nog de kunstwerken die niet op de veiling zijn verkocht. Mocht u daar alsnog interesse voor hebben dan kun u contact opnemen via **janfritz@ziggo.nl**. Deze kan u laten weten of het werk nog beschikbaar is of inmiddels al verkocht is na de veiling.
 
-Op de site vindt u foto's, informatie en de startprijs van de kunstwerken. In de aanloop naar de veiling kunnen nog kunstwerken worden toegevoegd.
+**Donaties zijn nog altijd mogelijk via de donatieknop op deze site.Deze blijft tot eind oktober actief.**
 
-Gekochte kunst kunt u direct meenemen. Grotere werken kunnen later worden opgehaald. Mocht u anderen kennen die graag Nepal willen ondersteunen via de aankoop van een kunstwerk: zegt het voort!
+**De actuele opbrengst staat ook vermeld.** 
 
-Graag tot ziens op zondag 4 oktober.
+Wij danken iedereen die heeft bijgedragen aan het succes.
 
 Pieter van den Broeke ([pietervandenbroeke.nl](https://www.pietervandenbroeke.nl))\
 Jan Fritz ([janfritz.nl](https://www.janfritz.nl))\
